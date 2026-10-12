@@ -937,8 +937,21 @@ header::after{
  [data-reveal],[data-reveal="left"],[data-reveal="right"],[data-reveal="scale"]{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}
 }
 </style>
+<style id="scroll-wave-effects">
+/* Scroll-reactive liquid waves + velocity blur */
+#scroll-waves{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;isolation:isolate;opacity:.68}
+#scroll-waves .wave{position:absolute;width:125vw;height:38vh;left:-12vw;border-radius:48%;filter:blur(calc(18px + var(--scroll-blur,0px)));mix-blend-mode:screen;will-change:transform,filter;transition:filter .22s ease-out}
+#scroll-waves .wave-a{top:12%;background:radial-gradient(ellipse at 35% 50%,rgba(77,111,255,.18),transparent 58%),linear-gradient(100deg,transparent 8%,rgba(102,133,255,.08) 38%,rgba(139,37,100,.12) 62%,transparent 92%);border-top:1px solid rgba(133,157,255,.12);transform:translate3d(0,var(--wave-y,0px),0) rotate(-9deg);animation:waveDriftA 18s ease-in-out infinite alternate}
+#scroll-waves .wave-b{top:46%;height:30vh;background:radial-gradient(ellipse at 65% 50%,rgba(151,27,88,.17),transparent 62%),linear-gradient(90deg,transparent,rgba(91,115,255,.09),transparent);border-top:1px solid rgba(194,80,148,.13);transform:translate3d(0,calc(var(--wave-y,0px)*-.65),0) rotate(7deg);animation:waveDriftB 23s ease-in-out infinite alternate}
+#scroll-waves .wave-c{top:73%;height:26vh;background:radial-gradient(ellipse at 30% 50%,rgba(68,95,219,.13),transparent 62%);border-top:1px solid rgba(123,144,255,.1);transform:translate3d(0,calc(var(--wave-y,0px)*.4),0) rotate(-4deg);animation:waveDriftA 27s ease-in-out infinite alternate-reverse}
+@keyframes waveDriftA{to{margin-left:5vw;scale:1.04 1.12}}
+@keyframes waveDriftB{to{margin-left:-5vw;scale:1.03 .92}}
+@media(max-width:700px){#scroll-waves{opacity:.42}#scroll-waves .wave{height:25vh;filter:blur(calc(22px + var(--scroll-blur,0px)))}}
+@media(prefers-reduced-motion:reduce){#scroll-waves .wave{animation:none;transition:none}}
+</style>
 </head>
 <body>
+<div id="scroll-waves" aria-hidden="true"><div class="wave wave-a"></div><div class="wave wave-b"></div><div class="wave wave-c"></div></div>
 <div class="cursor-glow"></div><div class="orb one"></div><div class="orb two"></div>
 
 <header class="container">
@@ -1281,6 +1294,29 @@ if(reelWindow && reelTrack){
   if(el.closest('.marquee-window')||el.matches('header .navlinks a'))return;
   if(el.dataset.reveal)observer.observe(el);
  });
+})();
+
+
+/* Give the background waves a subtle directional drift and blur while scrolling. */
+(()=>{
+ const waveRoot=document.getElementById('scroll-waves');
+ if(!waveRoot)return;
+ let previousY=window.scrollY, previousTime=performance.now(), frame=0, releaseTimer=null;
+ const update=()=>{
+   frame=0;
+   const now=performance.now(), y=window.scrollY, dt=Math.max(16,now-previousTime);
+   const velocity=Math.min(1,Math.abs(y-previousY)/dt*2.8);
+   const direction=y>=previousY?1:-1;
+   waveRoot.style.setProperty('--scroll-blur',(velocity*13).toFixed(1)+'px');
+   waveRoot.style.setProperty('--wave-y',(direction*Math.min(velocity*34,34)).toFixed(1)+'px');
+   previousY=y;previousTime=now;
+   clearTimeout(releaseTimer);
+   releaseTimer=setTimeout(()=>{
+     waveRoot.style.setProperty('--scroll-blur','0px');
+     waveRoot.style.setProperty('--wave-y','0px');
+   },110);
+ };
+ window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
 })();
 
 </script>
