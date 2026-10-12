@@ -969,6 +969,34 @@ body:before{transition:none;will-change:transform}
  #scroll-waves .wave{animation:none}
 }
 </style>
+<style id="high-refresh-tuning">
+/* High-refresh scroll tuning: keep the visuals, eliminate costly per-frame paint work. */
+body:before{animation:none!important;transition:none!important;will-change:auto}
+body:after{display:none}
+.orb{filter:blur(70px);opacity:.10;animation:none!important}
+.hero:before,.hero:after,.reel-section:before{animation:none!important;filter:blur(14px)}
+.project-card .mini-shape,.project-card.ai .mini-shape{animation:none!important}
+.hero h1:after{animation:none!important;opacity:0}
+.gradient-text{animation:none!important;background-position:50% 50%}
+#scroll-waves{opacity:.34;contain:strict}
+#scroll-waves .wave{filter:none!important;transition:none!important;will-change:transform;contain:strict}
+#scroll-waves .wave-a,#scroll-waves .wave-b,#scroll-waves .wave-c{animation:none!important}
+#scroll-waves .wave-a{background:radial-gradient(ellipse at 35% 50%,rgba(77,111,255,.16),transparent 58%);border-top-color:rgba(133,157,255,.09)}
+#scroll-waves .wave-b{background:radial-gradient(ellipse at 65% 50%,rgba(151,27,88,.13),transparent 62%);border-top-color:rgba(194,80,148,.08)}
+#scroll-waves .wave-c{background:radial-gradient(ellipse at 30% 50%,rgba(68,95,219,.10),transparent 62%);border-top-color:rgba(123,144,255,.07)}
+.cursor-glow{display:none!important}
+[data-reveal]{transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.2,1)!important;filter:none!important}
+@media(max-width:700px){
+ body:before{animation:none!important}
+ #scroll-waves{opacity:.22}
+ .orb{display:none}
+ .hero:before,.hero:after{filter:blur(8px)}
+ .project-card:hover,.skill:hover,.tool:hover{transform:none;box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
 </head>
 <body>
 <div id="scroll-waves" aria-hidden="true"><div class="wave wave-a"></div><div class="wave wave-b"></div><div class="wave wave-c"></div></div>
@@ -1310,19 +1338,17 @@ if(reelWindow && reelTrack){
 })();
 
 
-/* Lightweight scroll-linked wave drift: transform only, no dynamic blur recalculation. */
+/* Very light scroll-linked drift. No timers, blur updates, or repeated style writes. */
 (()=>{
  const waveRoot=document.getElementById('scroll-waves');
- if(!waveRoot)return;
- let previousY=window.scrollY, frame=0, settleFrame=0;
+ if(!waveRoot || window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ let previousY=window.scrollY, frame=0;
  const update=()=>{
    frame=0;
    const y=window.scrollY;
-   const delta=Math.max(-1,Math.min(1,(y-previousY)/24));
-   waveRoot.style.setProperty('--wave-y',(delta*18).toFixed(1)+'px');
+   const delta=Math.max(-1,Math.min(1,(y-previousY)/40));
+   waveRoot.style.setProperty('--wave-y',(delta*12).toFixed(1)+'px');
    previousY=y;
-   if(settleFrame)cancelAnimationFrame(settleFrame);
-   settleFrame=requestAnimationFrame(()=>{waveRoot.style.setProperty('--wave-y','0px');settleFrame=0});
  };
  window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
 })();
