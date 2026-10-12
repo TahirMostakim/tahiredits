@@ -949,6 +949,26 @@ header::after{
 @media(max-width:700px){#scroll-waves{opacity:.42}#scroll-waves .wave{height:25vh;filter:blur(calc(22px + var(--scroll-blur,0px)))}}
 @media(prefers-reduced-motion:reduce){#scroll-waves .wave{animation:none;transition:none}}
 </style>
+<style id="scroll-performance-pass">
+/* Performance pass: keep scroll-time work cheap and avoid repaint-heavy filters. */
+html{scroll-behavior:smooth}
+body:before{transition:none;will-change:transform}
+#scroll-waves .wave{filter:blur(22px)!important;transition:none!important;will-change:transform;contain:paint}
+#scroll-waves .wave-a{transform:translate3d(0,var(--wave-y,0px),0) rotate(-9deg)}
+#scroll-waves .wave-b{transform:translate3d(0,calc(var(--wave-y,0px)*-.65),0) rotate(7deg)}
+#scroll-waves .wave-c{transform:translate3d(0,calc(var(--wave-y,0px)*.4),0) rotate(-4deg)}
+@media(max-width:700px){
+ body:before{animation:none}
+ #scroll-waves{opacity:.28}
+ #scroll-waves .wave{filter:blur(26px)!important}
+ .cursor-glow{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ body:before{animation:none}
+ #scroll-waves .wave{animation:none}
+}
+</style>
 </head>
 <body>
 <div id="scroll-waves" aria-hidden="true"><div class="wave wave-a"></div><div class="wave wave-b"></div><div class="wave wave-c"></div></div>
@@ -1112,22 +1132,15 @@ header::after{
 <script>
 const root=document.documentElement;
 const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
+/* Keep scroll handling passive and avoid changing expensive background gradients on every frame. */
 function updateScrollBackground(){
   const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
   const p=clamp(window.scrollY/max,0,1);
-  // Deep electric blue at the top, gradually shifting into rich maroon near the bottom.
-  const start=[7,17,52], mid=[12,14,42], end=[48,7,32];
-  const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
-  const a=mix(start,mid,p);
-  const b=mix(mid,end,p);
-  const c2=mix([22,12,40],[74,10,43],p);
-  root.style.setProperty('--bgA',a.join(' '));
-  root.style.setProperty('--bgB',b.join(' '));
-  root.style.setProperty('--bgC',c2.join(' '));
-  root.style.setProperty('--scrollShift',(p*28).toFixed(1)+'%');
+  root.style.setProperty('--scrollShift',(p*20).toFixed(1)+'%');
 }
-window.addEventListener('scroll',updateScrollBackground,{passive:true});
-window.addEventListener('resize',updateScrollBackground);
+let scrollBgFrame=0;
+window.addEventListener('scroll',()=>{if(!scrollBgFrame)scrollBgFrame=requestAnimationFrame(()=>{scrollBgFrame=0;updateScrollBackground()})},{passive:true});
+window.addEventListener('resize',updateScrollBackground,{passive:true});
 updateScrollBackground();
 const heroTitle=document.querySelector('.hero h1');
 const heroStack=document.querySelector('.hero-stack');
@@ -1297,28 +1310,22 @@ if(reelWindow && reelTrack){
 })();
 
 
-/* Give the background waves a subtle directional drift and blur while scrolling. */
+/* Lightweight scroll-linked wave drift: transform only, no dynamic blur recalculation. */
 (()=>{
  const waveRoot=document.getElementById('scroll-waves');
  if(!waveRoot)return;
- let previousY=window.scrollY, previousTime=performance.now(), frame=0, releaseTimer=null;
+ let previousY=window.scrollY, frame=0, settleFrame=0;
  const update=()=>{
    frame=0;
-   const now=performance.now(), y=window.scrollY, dt=Math.max(16,now-previousTime);
-   const velocity=Math.min(1,Math.abs(y-previousY)/dt*2.8);
-   const direction=y>=previousY?1:-1;
-   waveRoot.style.setProperty('--scroll-blur',(velocity*13).toFixed(1)+'px');
-   waveRoot.style.setProperty('--wave-y',(direction*Math.min(velocity*34,34)).toFixed(1)+'px');
-   previousY=y;previousTime=now;
-   clearTimeout(releaseTimer);
-   releaseTimer=setTimeout(()=>{
-     waveRoot.style.setProperty('--scroll-blur','0px');
-     waveRoot.style.setProperty('--wave-y','0px');
-   },110);
+   const y=window.scrollY;
+   const delta=Math.max(-1,Math.min(1,(y-previousY)/24));
+   waveRoot.style.setProperty('--wave-y',(delta*18).toFixed(1)+'px');
+   previousY=y;
+   if(settleFrame)cancelAnimationFrame(settleFrame);
+   settleFrame=requestAnimationFrame(()=>{waveRoot.style.setProperty('--wave-y','0px');settleFrame=0});
  };
  window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
 })();
-
 </script>
 </body>
 </html>
