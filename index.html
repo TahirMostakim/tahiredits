@@ -1165,6 +1165,43 @@ body:after{display:none}
  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 </style>
+
+<style id="compact-work-section">
+/* Compact the portfolio work section while preserving its original visual style. */
+#work.work{padding:68px 0 52px}
+#work .section-top{gap:32px}
+#work .section-title{font-size:clamp(42px,4.6vw,62px);letter-spacing:-3px;margin-top:15px;line-height:.98}
+#work .pills{gap:7px;margin:22px 0}
+#work .pill{padding:8px 12px;font-size:11px}
+#work .project-grid{gap:14px}
+#work .project-card{min-height:270px;padding:20px;border-radius:10px}
+#work .project-card.wide{min-height:230px}
+#work .project-card .project-copy{font-size:clamp(34px,3.4vw,44px);letter-spacing:-2.7px;bottom:7%;line-height:.9}
+#work .project-card .tag{font-size:8px;letter-spacing:1.7px}
+#work .project-card .arrow{width:35px;height:35px;right:15px;bottom:15px}
+#work .project-art{top:13%;height:58%}
+@media(max-width:900px){
+  #work.work{padding:56px 0 44px}
+  #work .project-card{min-height:245px}
+  #work .project-card.wide{min-height:225px}
+  #work .project-card .project-copy{font-size:clamp(31px,4vw,39px)}
+}
+@media(max-width:650px){
+  #work.work{padding:48px 0 38px}
+  #work .section-title{font-size:clamp(40px,9vw,52px);letter-spacing:-2.5px}
+  #work .section-top p{font-size:13px;margin-top:14px}
+  #work .pills{margin:18px 0;gap:6px}
+  #work .pill{padding:7px 10px;font-size:10px}
+  #work .project-grid{gap:12px}
+  #work .project-card,#work .project-card.wide{min-height:225px;padding:17px}
+  #work .project-card .project-copy{font-size:clamp(30px,7.8vw,38px);letter-spacing:-2px;bottom:8%}
+  #work .project-art{width:38%;right:5%;height:55%}
+}
+@media(prefers-reduced-motion:reduce){
+  #work .project-card,#work .project-art{transition:none;animation:none!important}
+}
+</style>
+
 </head>
 <body>
 <div id="scroll-waves" aria-hidden="true"><div class="wave wave-a"></div><div class="wave wave-b"></div><div class="wave wave-c"></div></div>
