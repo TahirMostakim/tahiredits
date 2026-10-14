@@ -894,7 +894,14 @@ img,video,svg{max-width:100%}
 .reel-card-gif .preview-poster{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:contain!important;object-position:center;opacity:1!important}
 .reel-card-gif .preview-video{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;object-fit:contain!important;object-position:center;opacity:0;background:#090b18;pointer-events:none;transition:opacity .12s ease}
 .reel-card-gif .preview-video.is-active{opacity:1}
-@media(prefers-reduced-motion:reduce){.marquee{animation:none}.reel-card-gif .preview-video{display:none}}
+@media(prefers-reduced-motion:reduce){.marquee{animation:none}}
+
+
+/* Make preview play controls functional, keyboard-accessible buttons. */
+.reel-card .play.preview-toggle{appearance:none;-webkit-appearance:none;background:rgba(8,9,15,.24);color:#fff;padding:0;margin:0;cursor:pointer;font:inherit;flex-shrink:0}
+.reel-card .play.preview-toggle:focus-visible{outline:2px solid #c4d0ff;outline-offset:4px}
+.reel-card .play.preview-toggle.is-playing:after{border:0;width:9px;height:12px;margin-left:0;background:linear-gradient(90deg,#fff 0 3px,transparent 3px 6px,#fff 6px 9px)}
+@media(prefers-reduced-motion:reduce){.reel-card-gif .preview-video{display:block}}
 
 </style>
 
@@ -1212,19 +1219,19 @@ body:after{display:none}
       <article class="reel-card" data-tilt><div class="poster"><img src="assets/video-5-preview.webp" alt="SPORTS EDIT - Player spotlight" loading="lazy" decoding="async"></div><div class="top"><span>SPORTS EDIT</span><span>10</span></div><div class="bottom"><strong>Player spotlight</strong><span class="play"></span></div></article>
       <article class="reel-card" data-tilt><div class="poster"><img src="assets/video-12-preview.webp" alt="TALKING HEAD - Springtime story" loading="lazy" decoding="async"></div><div class="top"><span>TALKING HEAD</span><span>11</span></div><div class="bottom"><strong>Springtime story</strong><span class="play"></span></div></article>
       <article class="reel-card reel-card-wide" data-tilt><div class="poster"><img src="assets/ubereats-apple-style-animation-preview.webp" alt="PRODUCT MOTION - Uber Eats - Apple style" loading="lazy" decoding="async"></div><div class="top"><span>PRODUCT MOTION</span><span>12</span></div><div class="bottom"><strong>Uber Eats - Apple style</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/ron-wheeler-preview-poster.jpg" data-poster-src="assets/ron-wheeler-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/ron-wheeler-preview.mp4" data-poster-src="assets/ron-wheeler-preview-poster.jpg" poster="assets/ron-wheeler-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>13</span></div><div class="bottom"><strong>Ron Wheeler - Property Reveal</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/urgent-listing-misti-preview-poster.jpg" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/urgent-listing-misti-preview.mp4" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" poster="assets/urgent-listing-misti-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>14</span></div><div class="bottom"><strong>Urgent Listing - Misti</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-5-motion-design-preview-poster.jpg" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-5-motion-design-preview.mp4" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" poster="assets/video-5-motion-design-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>MOTION GRAPHICS</span><span>15</span></div><div class="bottom"><strong>Kinetic Typography</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-product-animation-preview-poster.jpg" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-product-animation-preview.mp4" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" poster="assets/video-10-product-animation-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>PRODUCT ANIMATION</span><span>16</span></div><div class="bottom"><strong>Garment Rotation</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/tahiredits-hero-blended-preview-poster.jpg" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/tahiredits-hero-blended-preview.mp4" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" poster="assets/tahiredits-hero-blended-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>SHOWREEL</span><span>17</span></div><div class="bottom"><strong>TahirEdits - Hero Preview</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-01-preview-poster.jpg" data-poster-src="assets/video-01-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-01-preview.mp4" data-poster-src="assets/video-01-preview-poster.jpg" poster="assets/video-01-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>18</span></div><div class="bottom"><strong>Luxury Property Montage</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-03-preview-poster.jpg" data-poster-src="assets/video-03-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-03-preview.mp4" data-poster-src="assets/video-03-preview-poster.jpg" poster="assets/video-03-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>19</span></div><div class="bottom"><strong>Presenter + Social Graphics</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-07-preview-poster.jpg" data-poster-src="assets/video-07-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-07-preview.mp4" data-poster-src="assets/video-07-preview-poster.jpg" poster="assets/video-07-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>B-ROLL / EDITING</span><span>20</span></div><div class="bottom"><strong>B-Roll &amp; Presenter Layout</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-08-preview-poster.jpg" data-poster-src="assets/video-08-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-08-preview.mp4" data-poster-src="assets/video-08-preview-poster.jpg" poster="assets/video-08-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>21</span></div><div class="bottom"><strong>Chess Transition</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-fitness-preview-poster.jpg" data-poster-src="assets/video-10-fitness-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-fitness-preview.mp4" data-poster-src="assets/video-10-fitness-preview-poster.jpg" poster="assets/video-10-fitness-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>FITNESS AD</span><span>22</span></div><div class="bottom"><strong>Fitness in Motion</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-11-preview-poster.jpg" data-poster-src="assets/video-11-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-11-preview.mp4" data-poster-src="assets/video-11-preview-poster.jpg" poster="assets/video-11-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>CINEMATIC EDIT</span><span>23</span></div><div class="bottom"><strong>Film Montage &amp; Captions</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-15-preview-poster.jpg" data-poster-src="assets/video-15-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-15-preview.mp4" data-poster-src="assets/video-15-preview-poster.jpg" poster="assets/video-15-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>24</span></div><div class="bottom"><strong>Skyline &amp; Feature Graphics</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-09-preview-poster.jpg" data-poster-src="assets/video-09-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-09-preview.mp4" data-poster-src="assets/video-09-preview-poster.jpg" poster="assets/video-09-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>25</span></div><div class="bottom"><strong>Poolside Property Tour</strong><span class="play"></span></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/ron-wheeler-preview-poster.jpg" data-poster-src="assets/ron-wheeler-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/ron-wheeler-preview.mp4" data-poster-src="assets/ron-wheeler-preview-poster.jpg" poster="assets/ron-wheeler-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>13</span></div><div class="bottom"><strong>Ron Wheeler - Property Reveal</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Ron Wheeler - Property Reveal" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/urgent-listing-misti-preview-poster.jpg" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/urgent-listing-misti-preview.mp4" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" poster="assets/urgent-listing-misti-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>14</span></div><div class="bottom"><strong>Urgent Listing - Misti</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Urgent Listing - Misti" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-5-motion-design-preview-poster.jpg" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-5-motion-design-preview.mp4" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" poster="assets/video-5-motion-design-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>MOTION GRAPHICS</span><span>15</span></div><div class="bottom"><strong>Kinetic Typography</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Kinetic Typography" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-product-animation-preview-poster.jpg" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-product-animation-preview.mp4" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" poster="assets/video-10-product-animation-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>PRODUCT ANIMATION</span><span>16</span></div><div class="bottom"><strong>Garment Rotation</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Garment Rotation" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/tahiredits-hero-blended-preview-poster.jpg" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/tahiredits-hero-blended-preview.mp4" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" poster="assets/tahiredits-hero-blended-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>SHOWREEL</span><span>17</span></div><div class="bottom"><strong>TahirEdits - Hero Preview</strong><button class="play preview-toggle" type="button" aria-label="Play preview: TahirEdits - Hero Preview" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-01-preview-poster.jpg" data-poster-src="assets/video-01-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-01-preview.mp4" data-poster-src="assets/video-01-preview-poster.jpg" poster="assets/video-01-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>18</span></div><div class="bottom"><strong>Luxury Property Montage</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Luxury Property Montage" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-03-preview-poster.jpg" data-poster-src="assets/video-03-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-03-preview.mp4" data-poster-src="assets/video-03-preview-poster.jpg" poster="assets/video-03-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>19</span></div><div class="bottom"><strong>Presenter + Social Graphics</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Presenter + Social Graphics" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-07-preview-poster.jpg" data-poster-src="assets/video-07-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-07-preview.mp4" data-poster-src="assets/video-07-preview-poster.jpg" poster="assets/video-07-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>B-ROLL / EDITING</span><span>20</span></div><div class="bottom"><strong>B-Roll &amp; Presenter Layout</strong><button class="play preview-toggle" type="button" aria-label="Play preview: B-Roll & Presenter Layout" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-08-preview-poster.jpg" data-poster-src="assets/video-08-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-08-preview.mp4" data-poster-src="assets/video-08-preview-poster.jpg" poster="assets/video-08-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>21</span></div><div class="bottom"><strong>Chess Transition</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Chess Transition" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-fitness-preview-poster.jpg" data-poster-src="assets/video-10-fitness-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-fitness-preview.mp4" data-poster-src="assets/video-10-fitness-preview-poster.jpg" poster="assets/video-10-fitness-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>FITNESS AD</span><span>22</span></div><div class="bottom"><strong>Fitness in Motion</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Fitness in Motion" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-11-preview-poster.jpg" data-poster-src="assets/video-11-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-11-preview.mp4" data-poster-src="assets/video-11-preview-poster.jpg" poster="assets/video-11-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>CINEMATIC EDIT</span><span>23</span></div><div class="bottom"><strong>Film Montage &amp; Captions</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Film Montage & Captions" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-15-preview-poster.jpg" data-poster-src="assets/video-15-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-15-preview.mp4" data-poster-src="assets/video-15-preview-poster.jpg" poster="assets/video-15-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>24</span></div><div class="bottom"><strong>Skyline &amp; Feature Graphics</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Skyline & Feature Graphics" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt><div class="poster preview-media"><img class="preview-poster" src="assets/video-09-preview-poster.jpg" data-poster-src="assets/video-09-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-09-preview.mp4" data-poster-src="assets/video-09-preview-poster.jpg" poster="assets/video-09-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>25</span></div><div class="bottom"><strong>Poolside Property Tour</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Poolside Property Tour" aria-pressed="false"></button></div></article>
       <article class="reel-card" data-tilt aria-hidden="true"><div class="poster"><img src="assets/ana-final-preview.webp" alt="REAL ESTATE - Erase a home's first impression" loading="lazy" decoding="async"></div><div class="top"><span>REAL ESTATE</span><span>01</span></div><div class="bottom"><strong>Erase a home's first impression</strong><span class="play"></span></div></article>
       <article class="reel-card reel-card-wide" data-tilt aria-hidden="true"><div class="poster"><img src="assets/gala-video-preview.webp" alt="EVENT PROMO - Drop of Life Gala" loading="lazy" decoding="async"></div><div class="top"><span>EVENT PROMO</span><span>02</span></div><div class="bottom"><strong>Drop of Life Gala</strong><span class="play"></span></div></article>
       <article class="reel-card" data-tilt aria-hidden="true"><div class="poster"><img src="assets/joe-video-5-preview.webp" alt="MOTION GRAPHICS - Product motion" loading="lazy" decoding="async"></div><div class="top"><span>MOTION GRAPHICS</span><span>03</span></div><div class="bottom"><strong>Product motion</strong><span class="play"></span></div></article>
@@ -1237,19 +1244,19 @@ body:after{display:none}
       <article class="reel-card" data-tilt aria-hidden="true"><div class="poster"><img src="assets/video-5-preview.webp" alt="SPORTS EDIT - Player spotlight" loading="lazy" decoding="async"></div><div class="top"><span>SPORTS EDIT</span><span>10</span></div><div class="bottom"><strong>Player spotlight</strong><span class="play"></span></div></article>
       <article class="reel-card" data-tilt aria-hidden="true"><div class="poster"><img src="assets/video-12-preview.webp" alt="TALKING HEAD - Springtime story" loading="lazy" decoding="async"></div><div class="top"><span>TALKING HEAD</span><span>11</span></div><div class="bottom"><strong>Springtime story</strong><span class="play"></span></div></article>
       <article class="reel-card reel-card-wide" data-tilt aria-hidden="true"><div class="poster"><img src="assets/ubereats-apple-style-animation-preview.webp" alt="PRODUCT MOTION - Uber Eats - Apple style" loading="lazy" decoding="async"></div><div class="top"><span>PRODUCT MOTION</span><span>12</span></div><div class="bottom"><strong>Uber Eats - Apple style</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/ron-wheeler-preview-poster.jpg" data-poster-src="assets/ron-wheeler-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/ron-wheeler-preview.mp4" data-poster-src="assets/ron-wheeler-preview-poster.jpg" poster="assets/ron-wheeler-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>13</span></div><div class="bottom"><strong>Ron Wheeler - Property Reveal</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/urgent-listing-misti-preview-poster.jpg" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/urgent-listing-misti-preview.mp4" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" poster="assets/urgent-listing-misti-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>14</span></div><div class="bottom"><strong>Urgent Listing - Misti</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-5-motion-design-preview-poster.jpg" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-5-motion-design-preview.mp4" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" poster="assets/video-5-motion-design-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>MOTION GRAPHICS</span><span>15</span></div><div class="bottom"><strong>Kinetic Typography</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-product-animation-preview-poster.jpg" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-product-animation-preview.mp4" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" poster="assets/video-10-product-animation-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>PRODUCT ANIMATION</span><span>16</span></div><div class="bottom"><strong>Garment Rotation</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/tahiredits-hero-blended-preview-poster.jpg" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/tahiredits-hero-blended-preview.mp4" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" poster="assets/tahiredits-hero-blended-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>SHOWREEL</span><span>17</span></div><div class="bottom"><strong>TahirEdits - Hero Preview</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-01-preview-poster.jpg" data-poster-src="assets/video-01-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-01-preview.mp4" data-poster-src="assets/video-01-preview-poster.jpg" poster="assets/video-01-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>18</span></div><div class="bottom"><strong>Luxury Property Montage</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-03-preview-poster.jpg" data-poster-src="assets/video-03-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-03-preview.mp4" data-poster-src="assets/video-03-preview-poster.jpg" poster="assets/video-03-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>19</span></div><div class="bottom"><strong>Presenter + Social Graphics</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-07-preview-poster.jpg" data-poster-src="assets/video-07-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-07-preview.mp4" data-poster-src="assets/video-07-preview-poster.jpg" poster="assets/video-07-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>B-ROLL / EDITING</span><span>20</span></div><div class="bottom"><strong>B-Roll &amp; Presenter Layout</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-08-preview-poster.jpg" data-poster-src="assets/video-08-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-08-preview.mp4" data-poster-src="assets/video-08-preview-poster.jpg" poster="assets/video-08-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>21</span></div><div class="bottom"><strong>Chess Transition</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-fitness-preview-poster.jpg" data-poster-src="assets/video-10-fitness-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-fitness-preview.mp4" data-poster-src="assets/video-10-fitness-preview-poster.jpg" poster="assets/video-10-fitness-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>FITNESS AD</span><span>22</span></div><div class="bottom"><strong>Fitness in Motion</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-11-preview-poster.jpg" data-poster-src="assets/video-11-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-11-preview.mp4" data-poster-src="assets/video-11-preview-poster.jpg" poster="assets/video-11-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>CINEMATIC EDIT</span><span>23</span></div><div class="bottom"><strong>Film Montage &amp; Captions</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-15-preview-poster.jpg" data-poster-src="assets/video-15-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-15-preview.mp4" data-poster-src="assets/video-15-preview-poster.jpg" poster="assets/video-15-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>24</span></div><div class="bottom"><strong>Skyline &amp; Feature Graphics</strong><span class="play"></span></div></article>
-      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-09-preview-poster.jpg" data-poster-src="assets/video-09-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-09-preview.mp4" data-poster-src="assets/video-09-preview-poster.jpg" poster="assets/video-09-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>25</span></div><div class="bottom"><strong>Poolside Property Tour</strong><span class="play"></span></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/ron-wheeler-preview-poster.jpg" data-poster-src="assets/ron-wheeler-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/ron-wheeler-preview.mp4" data-poster-src="assets/ron-wheeler-preview-poster.jpg" poster="assets/ron-wheeler-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>13</span></div><div class="bottom"><strong>Ron Wheeler - Property Reveal</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Ron Wheeler - Property Reveal" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/urgent-listing-misti-preview-poster.jpg" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/urgent-listing-misti-preview.mp4" data-poster-src="assets/urgent-listing-misti-preview-poster.jpg" poster="assets/urgent-listing-misti-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>14</span></div><div class="bottom"><strong>Urgent Listing - Misti</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Urgent Listing - Misti" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-5-motion-design-preview-poster.jpg" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-5-motion-design-preview.mp4" data-poster-src="assets/video-5-motion-design-preview-poster.jpg" poster="assets/video-5-motion-design-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>MOTION GRAPHICS</span><span>15</span></div><div class="bottom"><strong>Kinetic Typography</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Kinetic Typography" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-product-animation-preview-poster.jpg" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-product-animation-preview.mp4" data-poster-src="assets/video-10-product-animation-preview-poster.jpg" poster="assets/video-10-product-animation-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>PRODUCT ANIMATION</span><span>16</span></div><div class="bottom"><strong>Garment Rotation</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Garment Rotation" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/tahiredits-hero-blended-preview-poster.jpg" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/tahiredits-hero-blended-preview.mp4" data-poster-src="assets/tahiredits-hero-blended-preview-poster.jpg" poster="assets/tahiredits-hero-blended-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>SHOWREEL</span><span>17</span></div><div class="bottom"><strong>TahirEdits - Hero Preview</strong><button class="play preview-toggle" type="button" aria-label="Play preview: TahirEdits - Hero Preview" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-01-preview-poster.jpg" data-poster-src="assets/video-01-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-01-preview.mp4" data-poster-src="assets/video-01-preview-poster.jpg" poster="assets/video-01-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>18</span></div><div class="bottom"><strong>Luxury Property Montage</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Luxury Property Montage" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-03-preview-poster.jpg" data-poster-src="assets/video-03-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-03-preview.mp4" data-poster-src="assets/video-03-preview-poster.jpg" poster="assets/video-03-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>19</span></div><div class="bottom"><strong>Presenter + Social Graphics</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Presenter + Social Graphics" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-07-preview-poster.jpg" data-poster-src="assets/video-07-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-07-preview.mp4" data-poster-src="assets/video-07-preview-poster.jpg" poster="assets/video-07-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>B-ROLL / EDITING</span><span>20</span></div><div class="bottom"><strong>B-Roll &amp; Presenter Layout</strong><button class="play preview-toggle" type="button" aria-label="Play preview: B-Roll & Presenter Layout" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-08-preview-poster.jpg" data-poster-src="assets/video-08-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-08-preview.mp4" data-poster-src="assets/video-08-preview-poster.jpg" poster="assets/video-08-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>21</span></div><div class="bottom"><strong>Chess Transition</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Chess Transition" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-10-fitness-preview-poster.jpg" data-poster-src="assets/video-10-fitness-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-10-fitness-preview.mp4" data-poster-src="assets/video-10-fitness-preview-poster.jpg" poster="assets/video-10-fitness-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>FITNESS AD</span><span>22</span></div><div class="bottom"><strong>Fitness in Motion</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Fitness in Motion" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-11-preview-poster.jpg" data-poster-src="assets/video-11-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-11-preview.mp4" data-poster-src="assets/video-11-preview-poster.jpg" poster="assets/video-11-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>CINEMATIC EDIT</span><span>23</span></div><div class="bottom"><strong>Film Montage &amp; Captions</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Film Montage & Captions" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-15-preview-poster.jpg" data-poster-src="assets/video-15-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-15-preview.mp4" data-poster-src="assets/video-15-preview-poster.jpg" poster="assets/video-15-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>TALKING HEAD</span><span>24</span></div><div class="bottom"><strong>Skyline &amp; Feature Graphics</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Skyline & Feature Graphics" aria-pressed="false"></button></div></article>
+      <article class="reel-card reel-card-wide reel-card-gif" data-tilt aria-hidden="true"><div class="poster preview-media"><img class="preview-poster" src="assets/video-09-preview-poster.jpg" data-poster-src="assets/video-09-preview-poster.jpg" alt="" loading="eager" fetchpriority="low" decoding="async"><video class="preview-video" data-video-src="assets/video-09-preview.mp4" data-poster-src="assets/video-09-preview-poster.jpg" poster="assets/video-09-preview-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video></div><div class="top"><span>REAL ESTATE</span><span>25</span></div><div class="bottom"><strong>Poolside Property Tour</strong><button class="play preview-toggle" type="button" aria-label="Play preview: Poolside Property Tour" aria-pressed="false"></button></div></article>
 
     </div>
   </div>
@@ -1836,16 +1843,16 @@ if(reelWindow && reelTrack){
 })();
 
 
-/* TahirEdits media manager: instant posters, limited concurrent playback, buffered MP4 reuse. */
+/* TahirEdits preview player: prebuffer early, retry on ready, keep a manual play option. */
 (function(){
   const cards = Array.from(document.querySelectorAll('.reel-card-gif'));
   if(!cards.length) return;
 
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const visibleCards = new Set();
   const selectedCards = new Set();
-  const activeVideos = new Set();
   let updateQueued = false;
+  let userManualCard = null;
 
   const playbackLimit = function(){
     if(window.innerWidth <= 680) return 1;
@@ -1853,145 +1860,206 @@ if(reelWindow && reelTrack){
     return 3;
   };
 
+  const videoOf = card => card.querySelector('.preview-video');
+  const controlOf = card => card.querySelector('.preview-toggle');
+
   const prepare = function(card){
-    const video = card.querySelector('.preview-video');
+    const video = videoOf(card);
     if(!video || video.dataset.failed === 'true') return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute('muted','');
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline','');
     if(!video.getAttribute('src')){
       video.preload = 'auto';
-      video.fetchPriority = 'low';
       video.src = video.dataset.videoSrc;
       video.load();
     }
   };
 
-  const stop = function(card){
-    const video = card.querySelector('.preview-video');
-    if(!video) return;
-    video.pause();
-    video.classList.remove('is-active');
-    activeVideos.delete(video);
+  const setPlayingLook = function(card, isPlaying){
+    const video = videoOf(card);
+    const button = controlOf(card);
+    if(video) video.classList.toggle('is-active',!!isPlaying);
+    if(button){
+      button.classList.toggle('is-playing',!!isPlaying);
+      button.setAttribute('aria-pressed',isPlaying?'true':'false');
+      const title = card.querySelector('.bottom strong')?.textContent?.trim() || 'video preview';
+      button.setAttribute('aria-label',(isPlaying?'Pause preview: ':'Play preview: ')+title);
+    }
   };
 
-  const start = function(card){
-    const video = card.querySelector('.preview-video');
+  const stop = function(card, release=false){
+    const video = videoOf(card);
+    if(!video) return;
+    video.pause();
+    setPlayingLook(card,false);
+    if(release && video.hasAttribute('src')){
+      video.removeAttribute('src');
+      video.load();
+    }
+  };
+
+  const start = function(card, manual=false){
+    const video = videoOf(card);
     if(!video || video.dataset.failed === 'true') return;
     prepare(card);
-    if(video.readyState < 2 || (!video.paused && !video.ended)) return;
-    video.fetchPriority = 'high';
-    const attempt = video.play();
-    if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
+    if(video.readyState < 2) return;
+    const playAttempt = video.play();
+    if(playAttempt && typeof playAttempt.then === 'function'){
+      playAttempt.then(function(){
+        if(manual || (card.dataset.previewVisible === 'true' && selectedCards.has(card))){
+          setPlayingLook(card,true);
+        } else {
+          stop(card,false);
+        }
+      }).catch(function(){
+        setPlayingLook(card,false);
+      });
+    }
   };
 
   const update = function(){
     updateQueued = false;
-    const viewportCenter = window.innerWidth / 2;
+    const viewportCenter = window.innerWidth/2;
     const candidates = Array.from(visibleCards)
-      .filter(card => card.isConnected && card.dataset.previewVisible === 'true')
-      .map(card => {
-        const rect = card.getBoundingClientRect();
-        return {card:card, distance:Math.abs((rect.left + rect.right) / 2 - viewportCenter)};
+      .filter(card=>card.isConnected && card.dataset.previewVisible==='true')
+      .map(card=>{
+        const rect=card.getBoundingClientRect();
+        return {card:card,distance:Math.abs((rect.left+rect.right)/2-viewportCenter)};
       })
-      .sort((a,b) => a.distance-b.distance)
-      .slice(0, playbackLimit());
+      .sort((a,b)=>a.distance-b.distance)
+      .slice(0,playbackLimit())
+      .map(item=>item.card);
 
     selectedCards.clear();
-    candidates.forEach(item => selectedCards.add(item.card));
+    candidates.forEach(card=>selectedCards.add(card));
 
-    // Pause non-selected cards first, so their decoders are released before new videos start.
-    visibleCards.forEach(card => {
-      if(!selectedCards.has(card)) stop(card);
+    // A manually requested preview takes priority over passive autoplay.
+    if(userManualCard && visibleCards.has(userManualCard)){
+      selectedCards.add(userManualCard);
+    } else {
+      userManualCard=null;
+    }
+
+    visibleCards.forEach(card=>{
+      if(!selectedCards.has(card)) stop(card,false);
     });
-    selectedCards.forEach(start);
+    selectedCards.forEach(card=>start(card,false));
   };
 
   const scheduleUpdate = function(){
     if(updateQueued) return;
-    updateQueued = true;
+    updateQueued=true;
     requestAnimationFrame(update);
   };
 
   cards.forEach(function(card){
-    const video = card.querySelector('.preview-video');
+    const video=videoOf(card);
+    const button=controlOf(card);
     if(!video) return;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.preload = 'none';
+    video.muted=true;
+    video.defaultMuted=true;
+    video.loop=true;
+    video.playsInline=true;
+    video.preload='none';
 
-    video.addEventListener('playing', function(){
-      if(card.dataset.previewVisible === 'true' && selectedCards.has(card)){
-        video.classList.add('is-active');
-        activeVideos.add(video);
-      } else {
-        video.pause();
-        video.classList.remove('is-active');
-        activeVideos.delete(video);
+    video.addEventListener('loadeddata',scheduleUpdate);
+    video.addEventListener('canplay',function(){
+      if(card.dataset.previewVisible==='true' && (selectedCards.has(card) || userManualCard===card)){
+        start(card,userManualCard===card);
       }
     });
-    video.addEventListener('waiting', function(){
-      video.classList.remove('is-active');
-      activeVideos.delete(video);
+    video.addEventListener('playing',function(){
+      if(userManualCard===card || (card.dataset.previewVisible==='true' && selectedCards.has(card))){
+        setPlayingLook(card,true);
+      } else {
+        stop(card,false);
+      }
     });
-    video.addEventListener('stalled', function(){
-      video.classList.remove('is-active');
-      activeVideos.delete(video);
+    video.addEventListener('waiting',function(){ setPlayingLook(card,false); });
+    video.addEventListener('stalled',function(){ setPlayingLook(card,false); });
+    video.addEventListener('pause',function(){ setPlayingLook(card,false); });
+    video.addEventListener('error',function(){
+      video.dataset.failed='true';
+      setPlayingLook(card,false);
+      // Keep the lightweight poster visible if a browser cannot play a preview.
     });
-    video.addEventListener('pause', function(){
-      video.classList.remove('is-active');
-      activeVideos.delete(video);
-    });
-    video.addEventListener('error', function(){
-      video.dataset.failed = 'true';
-      video.classList.remove('is-active');
-      activeVideos.delete(video);
-      // Keep the small poster visible instead of downloading large GIF fallbacks.
-    });
+
+    // The play control works even when autoplay is unavailable or reduced motion is enabled.
+    if(button){
+      button.addEventListener('click',function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        if(userManualCard===card && !video.paused){
+          userManualCard=null;
+          card.dataset.previewVisible='false';
+          stop(card,false);
+          selectedCards.delete(card);
+          scheduleUpdate();
+          return;
+        }
+        if(userManualCard && userManualCard!==card) stop(userManualCard,false);
+        userManualCard=card;
+        card.dataset.previewVisible='true';
+        selectedCards.add(card);
+        prepare(card);
+        if(video.readyState>=2) start(card,true);
+      });
+      button.addEventListener('keydown',function(event){
+        if(event.key==='Enter' || event.key===' '){
+          event.preventDefault();
+          button.click();
+        }
+      });
+    }
   });
 
-  if(reducedMotion) return;
+  if(reduceMotion){
+    // Respect reduced-motion autoplay preferences while leaving explicit playback available.
+    return;
+  }
 
+  // Prebuffer several cards ahead; MP4s are small and their poster stays visible meanwhile.
   const preloader = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        prepare(entry.target);
-        preloader.unobserve(entry.target);
-      }
+      if(entry.isIntersecting) prepare(entry.target);
     });
-  }, {root:null, rootMargin:'0px 280px 0px 280px', threshold:0});
+  },{root:null,rootMargin:'0px 1600px 0px 1600px',threshold:0});
 
   const playbackObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        entry.target.dataset.previewVisible = 'true';
+        entry.target.dataset.previewVisible='true';
         visibleCards.add(entry.target);
       } else {
-        entry.target.dataset.previewVisible = 'false';
+        entry.target.dataset.previewVisible='false';
         visibleCards.delete(entry.target);
         selectedCards.delete(entry.target);
-        stop(entry.target);
+        if(userManualCard===entry.target) userManualCard=null;
+        stop(entry.target,false);
       }
     });
     scheduleUpdate();
-  }, {root:null, rootMargin:'0px', threshold:0.01});
+  },{root:null,rootMargin:'0px',threshold:0.01});
 
   cards.forEach(function(card){
     preloader.observe(card);
     playbackObserver.observe(card);
   });
 
-  // Re-rank cards periodically as the CSS marquee moves, without a permanent RAF loop.
-  const rankingTimer = window.setInterval(function(){
+  // Re-rank nearby cards a few times per second to share decoder time safely.
+  window.setInterval(function(){
     if(!document.hidden) scheduleUpdate();
-  }, 300);
+  },350);
 
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden){
-      cards.forEach(stop);
-    } else {
-      scheduleUpdate();
-    }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden) cards.forEach(card=>stop(card,false));
+    else scheduleUpdate();
   });
-  window.addEventListener('resize', scheduleUpdate, {passive:true});
+  window.addEventListener('resize',scheduleUpdate,{passive:true});
 })();
 
 </script>
