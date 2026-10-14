@@ -735,6 +735,61 @@ img,video,svg{max-width:100%}
   }
 }
 
+
+/* Creative graphic-design gallery */
+.design-section{position:relative;overflow:hidden;padding:112px 0 105px;border-bottom:1px solid var(--line);isolation:isolate}
+.design-section:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 14% 30%,rgba(106,75,255,.15),transparent 32%),radial-gradient(ellipse at 85% 70%,rgba(190,41,99,.14),transparent 34%)}
+.design-heading{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:42px}
+.design-heading h2{font:400 clamp(48px,5.7vw,82px)/.95 "Space Grotesk";letter-spacing:-4px;margin:20px 0 0}
+.design-heading h2 em{font-family:"Instrument Serif",serif;color:#a8b8ff}
+.design-heading p{max-width:350px;color:#a1a6b9;line-height:1.7;margin:0 0 4px}
+.design-rail{display:flex;gap:22px;overflow-x:auto;overflow-y:hidden;padding:8px max(4.5vw,18px) 28px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#5b65a8 transparent;cursor:grab}
+.design-rail:active{cursor:grabbing}
+.design-card{position:relative;flex:0 0 clamp(250px,29vw,390px);height:440px;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:8px;scroll-snap-align:center;background:#17192b;isolation:isolate;transition:transform .45s,border-color .3s,box-shadow .4s}
+.design-card:hover{transform:translateY(-8px) rotate(-.6deg);border-color:rgba(182,193,255,.75);box-shadow:0 28px 75px rgba(0,0,0,.34),0 0 32px rgba(99,117,255,.12)}
+.design-card .art{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
+.design-card .art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.08),transparent 42%,rgba(0,0,0,.74))}
+.design-card .card-index{position:absolute;z-index:2;left:19px;top:18px;font:10px "DM Mono";letter-spacing:1.5px;color:rgba(255,255,255,.8)}
+.design-card .card-label{position:absolute;z-index:3;left:22px;right:20px;bottom:24px}
+.design-card .card-label small{font:700 9px "DM Mono";letter-spacing:2px;color:#c5ceff}
+.design-card .card-label h3{font:600 clamp(24px,2.8vw,35px)/.98 "Space Grotesk";letter-spacing:-1.3px;margin:10px 0 8px}
+.design-card .card-label p{font-size:12px;color:#d2d5e3;margin:0;line-height:1.5}
+.art-rental{background:radial-gradient(ellipse at 52% 25%,#b7e8f3,#e8f2f3 48%,#53657e 100%)}
+.art-rental .price{position:absolute;top:50px;font:900 clamp(56px,7vw,100px)/.8 "Space Grotesk";letter-spacing:-7px;color:#05060a;text-align:center}
+.art-rental .sub{position:absolute;top:148px;color:#4378c8;font:900 clamp(19px,2.6vw,32px) "Space Grotesk";text-align:center}
+.art-rental .car{position:absolute;bottom:68px;width:83%;height:125px;background:linear-gradient(165deg,#f9fbff,#8ca6c5 55%,#26384f);border-radius:48% 40% 22% 18%;transform:skewY(-4deg);box-shadow:0 24px 25px #10131b}
+.art-rental .car:before{content:"";position:absolute;left:20%;top:-46px;width:47%;height:70px;background:linear-gradient(160deg,#a8d9f1,#f4f7fb 52%,#1d2a40);clip-path:polygon(12% 100%,28% 5%,72% 5%,100% 100%)}
+.art-rental .car:after{content:"";position:absolute;left:8%;right:6%;top:32px;height:13px;background:#080a11;box-shadow:0 45px 0 -3px #151b27}
+.art-rome{background:#eee7d9;color:#c9090b}
+.art-rome .rome-title{position:absolute;top:24px;font:900 clamp(90px,12vw,150px)/.8 "Space Grotesk";letter-spacing:-10px;color:#c60008}
+.art-rome .colosseum{position:absolute;bottom:75px;width:90%;height:195px;background:repeating-linear-gradient(90deg,#4c4b49 0 12px,#e0d7c8 12px 18px),linear-gradient(#555,#777);clip-path:polygon(8% 100%,12% 25%,28% 6%,74% 6%,92% 27%,96% 100%);filter:grayscale(1);box-shadow:0 0 0 10px #c60008}
+.art-rome .colosseum:after{content:"";position:absolute;inset:28% 8% 0;background:repeating-linear-gradient(90deg,transparent 0 15px,#eee7d9 15px 21px)}
+.art-book{background:linear-gradient(145deg,#24150f,#070707 75%);color:#fff}
+.art-book .book-shelf{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 85px,rgba(186,125,66,.3) 86px 90px),repeating-linear-gradient(90deg,#20140f 0 20px,#483023 21px 29px,#0f0b0a 30px 43px)}
+.art-book .book-stack{position:absolute;bottom:75px;right:12%;width:58%;height:200px;display:flex;flex-direction:column;justify-content:end;transform:rotate(-4deg)}
+.art-book .book-stack i{height:31px;padding:5px 8px;font:800 11px "DM Sans";font-style:normal;color:#121212;background:linear-gradient(90deg,#e5bd52,#fff0b5);border-bottom:2px solid #5c3b20;box-shadow:0 4px 9px #000}
+.art-book .book-stack i:nth-child(2n){background:linear-gradient(90deg,#e7e0d2,#fff);margin-left:8px}
+.art-book .book-stack i:nth-child(3n){background:linear-gradient(90deg,#b92b20,#f5a04d);color:#fff}
+.art-startup{background:linear-gradient(140deg,#e2b36c,#fff3d8 58%,#9d571f)}
+.art-startup .block{position:absolute;inset:17% 9% 20%;background:#fff3d8;border:1px solid rgba(80,43,9,.15);box-shadow:0 20px 50px #804b2022}
+.art-startup .headline{position:absolute;top:22%;left:13%;font:800 clamp(27px,3.3vw,42px)/.98 "Space Grotesk";color:#9f5b1d;letter-spacing:-1.5px}
+.art-startup .portrait-a,.art-startup .portrait-b{position:absolute;bottom:17%;width:39%;height:49%;border-radius:48% 48% 12% 12%;background:linear-gradient(145deg,#f3c7a6,#7b3c2d 60%,#17191f);box-shadow:0 0 0 3px #fff8}
+.art-startup .portrait-a{left:11%;transform:rotate(-3deg)}
+.art-startup .portrait-b{right:10%;background:linear-gradient(145deg,#edb68c,#171c25 55%,#0b0c11);transform:rotate(3deg)}
+.art-paris{background:linear-gradient(#88c8e7 0 38%,#e8a12e 38% 100%)}
+.art-paris .paper{position:absolute;inset:12% 10% 10%;background:#f7f2df;box-shadow:0 16px 30px #1b1c2b2b}
+.art-paris .croissant{position:absolute;bottom:12%;left:-6%;width:112%;height:37%;background:repeating-linear-gradient(100deg,#e8a04d 0 15px,#ffd18a 16px 29px,#b66c2e 30px 35px);border-radius:60% 60% 42% 42%;transform:rotate(-8deg);box-shadow:inset 0 -17px 20px #a85d21}
+.art-paris .eiffel{position:absolute;left:15%;top:15%;width:27%;height:54%;border:5px solid #201d20;clip-path:polygon(50% 0,58% 22%,90% 100%,10% 100%,42% 22%);background:repeating-linear-gradient(0deg,transparent 0 20px,#292226 21px 25px)}
+.art-editorial{background:#c6c7ca}
+.art-editorial .face{position:absolute;left:18%;top:15%;width:57%;height:74%;border-radius:48% 45% 35% 38%;background:linear-gradient(100deg,#202026,#f0f0ec 34%,#a2a2a7 64%,#19191f);filter:grayscale(1);box-shadow:inset 12px -10px 30px #0007}
+.art-editorial .glasses{position:absolute;top:37%;left:20%;width:61%;height:15%;border:8px solid #ffae21;border-radius:24px;box-shadow:0 0 0 3px #fa5a2b}
+.art-editorial .glasses:after{content:"";position:absolute;left:48%;top:-4px;height:15px;border-left:7px solid #ffae21}
+.art-editorial .drip{position:absolute;top:49%;left:30%;width:8px;height:32%;background:#ffb52a;box-shadow:35px 14px 0 #ffb52a,75px -4px 0 #ff572e,112px 18px 0 #ffb52a}
+.design-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:24px 4.5vw 0;color:#9fa5bd;font:10px "DM Mono";letter-spacing:1.3px;text-transform:uppercase}
+.design-cta a{color:#e4e7ff;border-bottom:1px solid #777fe5;padding-bottom:6px}
+@media(max-width:700px){.design-section{padding:82px 0}.design-heading{display:block;margin-bottom:28px}.design-heading p{margin-top:22px}.design-card{flex-basis:78vw;height:410px}.design-cta{margin:20px 18px 0;align-items:flex-start;flex-direction:column;line-height:1.7}.design-heading h2{letter-spacing:-2.7px}}
+@media(prefers-reduced-motion:reduce){.design-card{transition:none}}
+
 </style>
 
 <style id="section-neon-upgrade">
@@ -1005,7 +1060,7 @@ body:after{display:none}
 <header class="container">
   <a href="#home" class="brand glow" aria-label="TahirEdits home"><img class="brand-logo" src="assets/tahiredits-logo.svg" alt="TahirEdits logo"></a>
   <nav class="navlinks">
-    <a href="#reels" class="glow">Work</a><a href="#about" class="glow">About</a><a href="#services" class="glow">Services</a><a href="#software" class="glow">Tools</a>
+    <a href="#reels" class="glow">Work</a><a href="#graphic-design" class="glow">Design</a><a href="#about" class="glow">About</a><a href="#services" class="glow">Services</a><a href="#software" class="glow">Tools</a>
   </nav>
   <a href="https://wa.me/8801602993525" target="_blank" rel="noopener noreferrer" class="cta header-cta glow" aria-label="Contact me on WhatsApp">Let's talk <b>↗</b></a>
   <button class="menu" aria-label="Menu">☰</button>
@@ -1084,6 +1139,25 @@ body:after{display:none}
     <article class="project-card motion" data-cat="motion"><div class="tag">MOTION DESIGN</div><div class="project-art art-rings" aria-hidden="true"><svg viewBox="0 0 180 150"><circle cx="92" cy="75" r="47" fill="none" stroke="#7993ff" stroke-width="22"/><circle cx="110" cy="79" r="47" fill="none" stroke="#bc286f" stroke-width="11" stroke-opacity=".85"/><circle cx="92" cy="75" r="22" fill="#111738"/></svg></div><div class="project-copy glow">Ideas.<br><em>In motion.</em></div><div class="arrow">↗</div></article>
     <article class="project-card ai wide" data-cat="ai"><div class="tag">AI CONTENT CREATION</div><div class="project-art art-orb" aria-hidden="true"><svg viewBox="0 0 180 180"><defs><radialGradient id="orbGrad" cx="28%" cy="24%"><stop stop-color="#f2e9ff"/><stop offset=".3" stop-color="#8f9cff"/><stop offset=".68" stop-color="#3e57c8"/><stop offset="1" stop-color="#85184e"/></radialGradient></defs><circle cx="90" cy="90" r="68" fill="url(#orbGrad)"/></svg></div><div class="project-copy glow">Imagine it.<br><em>Create it.</em></div><div class="arrow">↗</div></article>
   </div>
+</section>
+
+
+<section class="design-section" id="graphic-design">
+  <div class="container">
+    <div class="design-heading">
+      <div><div class="eyebrow2">02 / THE DESIGN PLAYGROUND</div><h2>Beyond the timeline.<br><em>Into the visual.</em></h2></div>
+      <p>Posters, thumbnails, editorial layouts and bold visual concepts. A dedicated space for the graphic side of my creative work.</p>
+    </div>
+  </div>
+  <div class="design-rail" aria-label="Horizontally scrolling graphic design portfolio">
+    <article class="design-card" data-tilt><div class="art art-rental"><span class="price">$30,000</span><span class="sub">RENTAL CAR CLIENT</span><div class="car"></div></div><span class="card-index">GD / 001</span><div class="card-label"><small>CAMPAIGN GRAPHIC</small><h3>Make the offer<br>impossible to miss.</h3><p>High-contrast type · Automotive · Social campaign</p></div></article>
+    <article class="design-card" data-tilt><div class="art art-rome"><span class="rome-title">ROME</span><div class="colosseum"></div></div><span class="card-index">GD / 002</span><div class="card-label"><small>TRAVEL EDITORIAL</small><h3>A city with a story.</h3><p>Editorial hierarchy · Destination poster · Print-inspired</p></div></article>
+    <article class="design-card" data-tilt><div class="art art-book"><div class="book-shelf"></div><div class="book-stack"><i>$100M OFFERS</i><i>THE ALMANACK</i><i>AI SUPERPOWERS</i><i>THE COLD START</i><i>$100M LEADS</i></div></div><span class="card-index">GD / 003</span><div class="card-label"><small>CONTENT DESIGN</small><h3>Ideas worth<br>keeping.</h3><p>Creator content · Typography · Visual storytelling</p></div></article>
+    <article class="design-card" data-tilt><div class="art art-startup"><div class="block"></div><div class="headline">Building<br>@shopthelnk</div><div class="portrait-a"></div><div class="portrait-b"></div></div><span class="card-index">GD / 004</span><div class="card-label"><small>PODCAST / STARTUP</small><h3>People behind<br>the pivot.</h3><p>Interview promo · Cutout composition · Warm palette</p></div></article>
+    <article class="design-card" data-tilt><div class="art art-paris"><div class="paper"></div><div class="eiffel"></div><div class="croissant"></div></div><span class="card-index">GD / 005</span><div class="card-label"><small>FOOD & TRAVEL</small><h3>Designed to<br>make you look.</h3><p>Collage · Texture · Playful composition</p></div></article>
+    <article class="design-card" data-tilt><div class="art art-editorial"><div class="face"></div><div class="glasses"></div><div class="drip"></div></div><span class="card-index">GD / 006</span><div class="card-label"><small>EXPERIMENTAL ART</small><h3>Break the<br>usual frame.</h3><p>Photo manipulation · Color blocking · Art direction</p></div></article>
+  </div>
+  <div class="design-cta"><span>Drag to explore · 06 visual directions</span><a href="#contact">Have a design in mind? ↗</a></div>
 </section>
 
 <section class="skills container">
