@@ -1876,7 +1876,7 @@ if(reelWindow && reelTrack){
     const video = card.querySelector('.preview-video');
     if(!video || video.dataset.failed === 'true') return;
     prepare(card);
-    if(video.readyState < 2) return;
+    if(video.readyState < 2 || (!video.paused && !video.ended)) return;
     video.fetchPriority = 'high';
     const attempt = video.play();
     if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
@@ -1979,16 +1979,10 @@ if(reelWindow && reelTrack){
     playbackObserver.observe(card);
   });
 
-  // Re-rank cards as the transformed marquee moves; only the nearest cards use decoders.
-  let lastCheck = 0;
-  const animationFrame = function(now){
-    if(!document.hidden && now-lastCheck > 350){
-      lastCheck = now;
-      scheduleUpdate();
-    }
-    requestAnimationFrame(animationFrame);
-  };
-  requestAnimationFrame(animationFrame);
+  // Re-rank cards periodically as the CSS marquee moves, without a permanent RAF loop.
+  const rankingTimer = window.setInterval(function(){
+    if(!document.hidden) scheduleUpdate();
+  }, 300);
 
   document.addEventListener('visibilitychange', function(){
     if(document.hidden){
