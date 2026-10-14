@@ -1906,6 +1906,10 @@ if(reelWindow && reelTrack){
     const video = videoOf(card);
     if(!video || video.dataset.failed === 'true') return;
     prepare(card);
+    if(!video.paused && !video.ended){
+      if(manual || (card.dataset.previewVisible === 'true' && selectedCards.has(card))) setPlayingLook(card,true);
+      return;
+    }
     if(video.readyState < 2) return;
     const playAttempt = video.play();
     if(playAttempt && typeof playAttempt.then === 'function'){
@@ -1925,7 +1929,7 @@ if(reelWindow && reelTrack){
     updateQueued = false;
     const viewportCenter = window.innerWidth/2;
     const candidates = Array.from(visibleCards)
-      .filter(card=>card.isConnected && card.dataset.previewVisible==='true')
+      .filter(card=>card.isConnected && card.dataset.previewVisible==='true' && card.dataset.userPaused!=='true')
       .map(card=>{
         const rect=card.getBoundingClientRect();
         return {card:card,distance:Math.abs((rect.left+rect.right)/2-viewportCenter)};
@@ -1995,7 +1999,7 @@ if(reelWindow && reelTrack){
         event.stopPropagation();
         if(userManualCard===card && !video.paused){
           userManualCard=null;
-          card.dataset.previewVisible='false';
+          card.dataset.userPaused='true';
           stop(card,false);
           selectedCards.delete(card);
           scheduleUpdate();
@@ -2033,6 +2037,7 @@ if(reelWindow && reelTrack){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
         entry.target.dataset.previewVisible='true';
+        entry.target.dataset.userPaused='false';
         visibleCards.add(entry.target);
       } else {
         entry.target.dataset.previewVisible='false';
