@@ -98,7 +98,8 @@ header{height:92px;display:flex;align-items:center;justify-content:space-between
 .reel-head h2{margin:10px 0 0;font:500 clamp(44px,5vw,76px)/.96 "Space Grotesk";letter-spacing:-3.5px;max-width:100%}
 .reel-head p{max-width:340px;line-height:1.55;color:#b0b6c8;text-align:right}
 .marquee-window{overflow:hidden}
-.marquee{display:flex;gap:28px;width:max-content;will-change:transform;animation:marquee 72s linear infinite}
+/* Slightly slower reel movement gives motion previews time to register without changing the card design. */
+.marquee{display:flex;gap:28px;width:max-content;will-change:transform;animation:marquee 88s linear infinite}
 .marquee:hover{animation-play-state:paused}
 @keyframes marquee{from{transform:translateX(calc(-50% - 14px))}to{transform:translateX(0)}}
 .reel-card{width:260px;height:465px;flex:0 0 260px;border-radius:20px;border:1px solid rgba(255,255,255,.16);background:#171a2a;transform-style:preserve-3d;box-shadow:0 18px 42px rgba(0,0,0,.28);overflow:hidden}
@@ -887,6 +888,13 @@ img,video,svg{max-width:100%}
 .reel-card-gif .preview-poster{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:contain!important;opacity:1!important}
 .reel-card-gif .preview-video{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;object-fit:contain!important;opacity:0;background:#090b18;pointer-events:none}
 .reel-card-gif .preview-video.is-active{opacity:1}
+
+
+/* Poster remains visible through startup, seeking, and buffering. */
+.reel-card-gif .preview-poster{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:contain!important;object-position:center;opacity:1!important}
+.reel-card-gif .preview-video{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;object-fit:contain!important;object-position:center;opacity:0;background:#090b18;pointer-events:none;transition:opacity .12s ease}
+.reel-card-gif .preview-video.is-active{opacity:1}
+@media(prefers-reduced-motion:reduce){.marquee{animation:none}.reel-card-gif .preview-video{display:none}}
 
 </style>
 
@@ -1828,29 +1836,85 @@ if(reelWindow && reelTrack){
 })();
 
 
-/* TahirEdits media manager: prebuffer nearby MP4s, show posters immediately, never refetch on every loop. */
+/* TahirEdits media manager: instant posters, limited concurrent playback, buffered MP4 reuse. */
 (function(){
   const cards = Array.from(document.querySelectorAll('.reel-card-gif'));
   if(!cards.length) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const visibleCards = new Set();
+  const activeVideos = new Set();
+  let updateQueued = false;
+
+  const playbackLimit = function(){
+    if(window.innerWidth <= 680) return 1;
+    if(window.innerWidth <= 1080) return 2;
+    return 3;
+  };
 
   const prepare = function(card){
     const video = card.querySelector('.preview-video');
     if(!video || video.dataset.failed === 'true') return;
     if(!video.getAttribute('src')){
       video.preload = 'auto';
+      video.fetchPriority = 'low';
       video.src = video.dataset.videoSrc;
       video.load();
     }
   };
 
-  const startPlayback = function(card){
+  const stop = function(card){
+    const video = card.querySelector('.preview-video');
+    if(!video) return;
+    video.pause();
+    video.classList.remove('is-active');
+    activeVideos.delete(video);
+    // Retain src and buffered data so the next loop doesn't restart the download.
+  };
+
+  const start = function(card){
     const video = card.querySelector('.preview-video');
     if(!video || video.dataset.failed === 'true') return;
-    if(video.readyState >= 2){
-      video.classList.add('is-active');
-      const attempt = video.play();
-      if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
+    prepare(card);
+    if(video.readyState < 2) return;
+    video.fetchPriority = 'high';
+    const attempt = video.play();
+    if(attempt && typeof attempt.catch === 'function'){
+      attempt.catch(function(){
+        // If autoplay is temporarily blocked, leave the poster visible.
+      });
     }
+  };
+
+  const update = function(){
+    updateQueued = false;
+    const viewportCenter = window.innerWidth / 2;
+    const candidates = Array.from(visibleCards)
+      .filter(card => card.isConnected && card.dataset.previewVisible === 'true')
+      .map(card => {
+        const rect = card.getBoundingClientRect();
+        return {card:card, distance:Math.abs((rect.left + rect.right) / 2 - viewportCenter)};
+      })
+      .sort((a,b) => a.distance-b.distance)
+      .slice(0, playbackLimit());
+
+    const chosen = new Set(candidates.map(x => x.card));
+    visibleCards.forEach(card => {
+      const video = card.querySelector('.preview-video');
+      if(!video) return;
+      if(chosen.has(card)){
+        prepare(card);
+        start(card);
+      } else {
+        stop(card);
+      }
+    });
+  };
+
+  const scheduleUpdate = function(){
+    if(updateQueued) return;
+    updateQueued = true;
+    requestAnimationFrame(update);
   };
 
   cards.forEach(function(card){
@@ -1861,38 +1925,42 @@ if(reelWindow && reelTrack){
     video.playsInline = true;
     video.preload = 'none';
 
-    video.oncanplay = function(){
-      if(card.dataset.previewVisible === 'true') startPlayback(card);
-    };
-    video.onerror = function(){
+    // Keep the poster visible until the browser is actually rendering video frames.
+    video.addEventListener('playing', function(){
+      if(card.dataset.previewVisible === 'true' && activeVideos.size <= playbackLimit()){
+        video.classList.add('is-active');
+        activeVideos.add(video);
+      }
+    });
+    video.addEventListener('waiting', function(){
+      video.classList.remove('is-active');
+      activeVideos.delete(video);
+    });
+    video.addEventListener('stalled', function(){
+      video.classList.remove('is-active');
+      activeVideos.delete(video);
+    });
+    video.addEventListener('pause', function(){
+      video.classList.remove('is-active');
+      activeVideos.delete(video);
+    });
+    video.addEventListener('error', function(){
       video.dataset.failed = 'true';
       video.classList.remove('is-active');
-      // Keep the small poster visible instead of downloading a multi-megabyte GIF fallback.
-    };
+      activeVideos.delete(video);
+      // The small poster remains visible instead of triggering a large GIF download.
+    });
+    video.addEventListener('ended', function(){
+      if(card.dataset.previewVisible === 'true'){
+        video.currentTime = 0;
+        const attempt = video.play();
+        if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
+      }
+    });
   });
 
-  const activate = function(card){
-    card.dataset.previewVisible = 'true';
-    prepare(card);
-    startPlayback(card);
-  };
+  if(reducedMotion) return;
 
-  const deactivate = function(card){
-    card.dataset.previewVisible = 'false';
-    const video = card.querySelector('.preview-video');
-    if(video){
-      video.pause();
-      video.classList.remove('is-active');
-      // Intentionally retain src and buffered media: cards revisit the viewport as the rail loops.
-    }
-  };
-
-  if(!('IntersectionObserver' in window)){
-    cards.forEach(activate);
-    return;
-  }
-
-  // Start buffering before a card reaches the viewport, but don't play until it is actually nearby.
   const preloader = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
@@ -1900,20 +1968,46 @@ if(reelWindow && reelTrack){
         preloader.unobserve(entry.target);
       }
     });
-  }, {root:null, rootMargin:'0px 700px 0px 700px', threshold:0});
+  }, {root:null, rootMargin:'0px 280px 0px 280px', threshold:0});
 
-  // Pause off-screen previews to limit simultaneous decoding; keep media cached for the next loop.
   const playbackObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
-      if(entry.isIntersecting) activate(entry.target);
-      else deactivate(entry.target);
+      if(entry.isIntersecting){
+        entry.target.dataset.previewVisible = 'true';
+        visibleCards.add(entry.target);
+      } else {
+        entry.target.dataset.previewVisible = 'false';
+        visibleCards.delete(entry.target);
+        stop(entry.target);
+      }
     });
-  }, {root:null, rootMargin:'0px 40px 0px 40px', threshold:0.01});
+    scheduleUpdate();
+  }, {root:null, rootMargin:'0px', threshold:0.01});
 
   cards.forEach(function(card){
     preloader.observe(card);
     playbackObserver.observe(card);
   });
+
+  // Refresh which cards get decoder time while the marquee continuously translates.
+  let lastCheck = 0;
+  const animationFrame = function(now){
+    if(!document.hidden && now-lastCheck > 300){
+      lastCheck = now;
+      scheduleUpdate();
+    }
+    requestAnimationFrame(animationFrame);
+  };
+  requestAnimationFrame(animationFrame);
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){
+      cards.forEach(stop);
+    } else {
+      scheduleUpdate();
+    }
+  });
+  window.addEventListener('resize', scheduleUpdate, {passive:true});
 })();
 
 </script>
