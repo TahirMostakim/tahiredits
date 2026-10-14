@@ -809,6 +809,33 @@ img,video,svg{max-width:100%}
 .design-section .design-card:nth-child(3n) .design-fallback{background:radial-gradient(circle at 65% 20%,rgba(255,184,86,.35),transparent 32%),linear-gradient(145deg,#211611,#090a17);color:#ffe6bb}
 .design-section .design-card:nth-child(3n + 1) .design-fallback{background:radial-gradient(circle at 20% 80%,rgba(55,215,206,.3),transparent 35%),linear-gradient(145deg,#101d38,#090a17)}
 
+
+/* Shared dimensional edge treatment for the video reel cards. */
+.reel-card{
+  border:1px solid rgba(176,190,255,.3);
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  transition:border-color .28s ease,box-shadow .32s ease,filter .32s ease;
+  box-shadow:0 18px 42px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.035),inset 7px 0 18px rgba(125,147,255,.025),inset -7px 0 18px rgba(194,43,104,.025);
+}
+.reel-card:hover,.reel-card:focus-within{
+  border-color:rgba(195,207,255,.9);
+  box-shadow:0 34px 75px rgba(0,0,0,.44),0 0 0 1px rgba(134,158,255,.28),0 0 34px rgba(94,125,255,.16),inset 0 0 0 1px rgba(255,255,255,.18),inset 9px 0 22px rgba(125,147,255,.07),inset -9px 0 22px rgba(194,43,104,.07);
+  filter:saturate(1.08);
+}
+.reel-card:focus-visible{outline:2px solid #9ab0ff;outline-offset:4px}
+.reel-card .poster{transform:translateZ(-1px)}
+.reel-card .top,.reel-card .bottom{transform:translateZ(14px)}
+/* Auto-scrolling design rail remains natively touch-scrollable. */
+.design-rail{scroll-snap-type:x proximity;scroll-behavior:auto;overscroll-behavior-inline:contain;touch-action:pan-x pan-y;user-select:none;-webkit-user-select:none}
+.design-rail img{pointer-events:none;-webkit-user-drag:none;user-select:none}
+.design-rail.is-dragging{cursor:grabbing;scroll-snap-type:none}
+.design-rail .design-card{transform-style:preserve-3d;will-change:transform}
+.design-rail .design-card:hover{box-shadow:0 32px 78px rgba(0,0,0,.42),0 0 0 1px rgba(171,188,255,.22),inset 0 0 0 1px rgba(255,255,255,.15)}
+.design-rail .design-card .card-label{transform:translateZ(18px)}
+.design-rail .design-card .card-index{transform:translateZ(22px)}
+@media(prefers-reduced-motion:reduce){.design-rail{scroll-behavior:auto}.reel-card,.design-card{transition:none}}
+
 </style>
 
 <style id="section-neon-upgrade">
@@ -1330,7 +1357,7 @@ body:after{display:none}
       <div class="card-label"><small>CAMPAIGN POSTER</small><h3>We can do it all!</h3><p>Retro-inspired poster with bold messaging and strong contrast.</p></div>
     </article>
   </div>
-  <div class="design-cta"><span>Drag to explore · 20 original designs</span><a href="#contact">Have a design in mind? ↗</a></div>
+  <div class="design-cta"><span>Auto-scroll · Hover to pause · Drag or swipe to explore</span><a href="#contact">Have a design in mind? ↗</a></div>
 </section>
 
 <section class="skills container">
@@ -1446,9 +1473,10 @@ document.addEventListener('mouseleave',()=>{if(heroTitle){heroTitle.style.transf
 
 document.querySelectorAll('[data-tilt]').forEach(card=>{
   card.addEventListener('pointermove',e=>{
+    if(e.pointerType==='touch'||card.closest('.is-dragging'))return;
     const r=card.getBoundingClientRect();
     const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-    card.style.transform='perspective(800px) rotateY('+(x*7)+'deg) rotateX('+(-y*7)+'deg) translateY(-7px)';
+    card.style.transform='perspective(900px) rotateY('+(x*8)+'deg) rotateX('+(-y*8)+'deg) translateY(-7px)';
   });
   card.addEventListener('pointerleave',()=>card.style.transform='');
 });
@@ -1599,6 +1627,103 @@ if(reelWindow && reelTrack){
  };
  window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
 })();
+
+/* Endless horizontal graphic-design showcase, with touch and mouse interaction. */
+(()=>{
+  const rail=document.querySelector('.design-rail');
+  if(!rail)return;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const originals=[...rail.querySelectorAll('.design-card')];
+  if(originals.length<2||reducedMotion.matches)return;
+
+  // Duplicate one cycle so the auto-scroll can loop without a visible jump.
+  const clones=originals.map(card=>{
+    const clone=card.cloneNode(true);
+    clone.dataset.railClone='true';
+    clone.setAttribute('aria-hidden','true');
+    clone.querySelectorAll('a,button,[tabindex]').forEach(el=>el.setAttribute('tabindex','-1'));
+    rail.appendChild(clone);
+    return clone;
+  });
+
+  // Bind the same subtle desktop 3D tilt to the duplicate cards.
+  clones.forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      if(e.pointerType==='touch'||rail.classList.contains('is-dragging'))return;
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/Math.max(r.width,1)-.5;
+      const y=(e.clientY-r.top)/Math.max(r.height,1)-.5;
+      card.style.transform='perspective(900px) rotateY('+(x*8)+'deg) rotateX('+(-y*8)+'deg) translateY(-7px)';
+    });
+    card.addEventListener('pointerleave',()=>{card.style.transform=''});
+  });
+
+  let cycleWidth=0, raf=0, last=0, paused=false, resumeTimer=0;
+  let mouseDrag=false, dragStartX=0, dragScroll=0;
+  const measure=()=>{
+    if(clones[0]&&originals[0]){
+      cycleWidth=clones[0].offsetLeft-originals[0].offsetLeft;
+    }
+  };
+  const wrapScroll=()=>{
+    if(cycleWidth<=0)return;
+    while(rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
+    while(rail.scrollLeft<0)rail.scrollLeft+=cycleWidth;
+  };
+  const stopAuto=()=>{paused=true;last=0;};
+  const resumeSoon=()=>{
+    clearTimeout(resumeTimer);
+    resumeTimer=setTimeout(()=>{paused=false;last=0;},1300);
+  };
+  const tick=now=>{
+    if(!rail.isConnected)return;
+    if(!last)last=now;
+    const dt=Math.min(40,now-last);
+    last=now;
+    if(!paused&&document.visibilityState==='visible'){
+      rail.scrollLeft+=dt*0.022;
+      if(cycleWidth>0&&rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
+    }
+    raf=requestAnimationFrame(tick);
+  };
+  rail.addEventListener('mouseenter',stopAuto);
+  rail.addEventListener('mouseleave',resumeSoon);
+  rail.addEventListener('focusin',stopAuto);
+  rail.addEventListener('focusout',resumeSoon);
+  rail.addEventListener('pointerdown',e=>{
+    stopAuto();
+    if(e.pointerType!=='mouse'||e.button!==0)return; // Native touch gestures stay enabled.
+    mouseDrag=true;
+    dragStartX=e.clientX;
+    dragScroll=rail.scrollLeft;
+    rail.classList.add('is-dragging');
+    try{rail.setPointerCapture(e.pointerId)}catch(_){}
+  });
+  rail.addEventListener('pointermove',e=>{
+    if(!mouseDrag)return;
+    rail.scrollLeft=dragScroll-(e.clientX-dragStartX);
+    wrapScroll();
+  });
+  const finish=()=>{
+    if(mouseDrag){mouseDrag=false;rail.classList.remove('is-dragging');}
+    resumeSoon();
+  };
+  rail.addEventListener('pointerup',finish);
+  rail.addEventListener('pointercancel',finish);
+  rail.addEventListener('lostpointercapture',finish);
+  rail.addEventListener('touchstart',stopAuto,{passive:true});
+  rail.addEventListener('touchend',resumeSoon,{passive:true});
+  rail.addEventListener('touchcancel',resumeSoon,{passive:true});
+  rail.addEventListener('wheel',e=>{
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){stopAuto();resumeSoon();}
+  },{passive:true});
+  window.addEventListener('resize',()=>{measure();wrapScroll();},{passive:true});
+  document.addEventListener('visibilitychange',()=>{last=0;});
+  measure();
+  requestAnimationFrame(()=>{measure();});
+  raf=requestAnimationFrame(tick);
+})();
+
 </script>
 </body>
 </html>
