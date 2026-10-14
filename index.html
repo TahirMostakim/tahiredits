@@ -1843,6 +1843,7 @@ if(reelWindow && reelTrack){
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const visibleCards = new Set();
+  const selectedCards = new Set();
   const activeVideos = new Set();
   let updateQueued = false;
 
@@ -1869,7 +1870,6 @@ if(reelWindow && reelTrack){
     video.pause();
     video.classList.remove('is-active');
     activeVideos.delete(video);
-    // Retain src and buffered data so the next loop doesn't restart the download.
   };
 
   const start = function(card){
@@ -1879,11 +1879,7 @@ if(reelWindow && reelTrack){
     if(video.readyState < 2) return;
     video.fetchPriority = 'high';
     const attempt = video.play();
-    if(attempt && typeof attempt.catch === 'function'){
-      attempt.catch(function(){
-        // If autoplay is temporarily blocked, leave the poster visible.
-      });
-    }
+    if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
   };
 
   const update = function(){
@@ -1898,17 +1894,14 @@ if(reelWindow && reelTrack){
       .sort((a,b) => a.distance-b.distance)
       .slice(0, playbackLimit());
 
-    const chosen = new Set(candidates.map(x => x.card));
+    selectedCards.clear();
+    candidates.forEach(item => selectedCards.add(item.card));
+
+    // Pause non-selected cards first, so their decoders are released before new videos start.
     visibleCards.forEach(card => {
-      const video = card.querySelector('.preview-video');
-      if(!video) return;
-      if(chosen.has(card)){
-        prepare(card);
-        start(card);
-      } else {
-        stop(card);
-      }
+      if(!selectedCards.has(card)) stop(card);
     });
+    selectedCards.forEach(start);
   };
 
   const scheduleUpdate = function(){
@@ -1925,11 +1918,14 @@ if(reelWindow && reelTrack){
     video.playsInline = true;
     video.preload = 'none';
 
-    // Keep the poster visible until the browser is actually rendering video frames.
     video.addEventListener('playing', function(){
-      if(card.dataset.previewVisible === 'true' && activeVideos.size <= playbackLimit()){
+      if(card.dataset.previewVisible === 'true' && selectedCards.has(card)){
         video.classList.add('is-active');
         activeVideos.add(video);
+      } else {
+        video.pause();
+        video.classList.remove('is-active');
+        activeVideos.delete(video);
       }
     });
     video.addEventListener('waiting', function(){
@@ -1948,14 +1944,7 @@ if(reelWindow && reelTrack){
       video.dataset.failed = 'true';
       video.classList.remove('is-active');
       activeVideos.delete(video);
-      // The small poster remains visible instead of triggering a large GIF download.
-    });
-    video.addEventListener('ended', function(){
-      if(card.dataset.previewVisible === 'true'){
-        video.currentTime = 0;
-        const attempt = video.play();
-        if(attempt && typeof attempt.catch === 'function') attempt.catch(function(){});
-      }
+      // Keep the small poster visible instead of downloading large GIF fallbacks.
     });
   });
 
@@ -1978,6 +1967,7 @@ if(reelWindow && reelTrack){
       } else {
         entry.target.dataset.previewVisible = 'false';
         visibleCards.delete(entry.target);
+        selectedCards.delete(entry.target);
         stop(entry.target);
       }
     });
@@ -1989,10 +1979,10 @@ if(reelWindow && reelTrack){
     playbackObserver.observe(card);
   });
 
-  // Refresh which cards get decoder time while the marquee continuously translates.
+  // Re-rank cards as the transformed marquee moves; only the nearest cards use decoders.
   let lastCheck = 0;
   const animationFrame = function(now){
-    if(!document.hidden && now-lastCheck > 300){
+    if(!document.hidden && now-lastCheck > 350){
       lastCheck = now;
       scheduleUpdate();
     }
