@@ -790,6 +790,20 @@ img,video,svg{max-width:100%}
 @media(max-width:700px){.design-section{padding:82px 0}.design-heading{display:block;margin-bottom:28px}.design-heading p{margin-top:22px}.design-card{flex-basis:78vw;height:410px}.design-cta{margin:20px 18px 0;align-items:flex-start;flex-direction:column;line-height:1.7}.design-heading h2{letter-spacing:-2.7px}}
 @media(prefers-reduced-motion:reduce){.design-card{transition:none}}
 
+
+/* Original graphic-design portfolio assets: fit the whole image without cropping. */
+.design-section .design-card{height:auto;display:flex;flex-direction:column;flex-shrink:0}
+.design-section .art{position:relative;inset:auto;display:block;aspect-ratio:4/5;overflow:hidden;background:#11121e}
+.design-section .art-landscape{aspect-ratio:3/2}
+.design-section .art-square{aspect-ratio:1/1}
+.design-section .art:after{display:none}
+.design-section .art img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;background:#11121e;z-index:2}
+.design-section .card-index{top:12px;left:12px;padding:7px 9px;background:rgba(7,8,20,.78);border:1px solid rgba(255,255,255,.22);border-radius:4px}
+.design-section .card-label{position:relative;left:auto;right:auto;bottom:auto;min-height:136px;padding:20px;background:linear-gradient(145deg,rgba(15,17,39,.98),rgba(18,12,31,.98))}
+.design-section .card-label h3{font-size:clamp(20px,2.3vw,28px);line-height:1.03}
+.design-section .card-label p{color:#aeb3c7}
+@media(max-width:700px){.design-section .design-card{flex-basis:78vw}.design-section .card-label{min-height:130px}}
+
 </style>
 
 <style id="section-neon-upgrade">
@@ -1146,18 +1160,152 @@ body:after{display:none}
   <div class="container">
     <div class="design-heading">
       <div><div class="eyebrow2">02 / THE DESIGN PLAYGROUND</div><h2>Beyond the timeline.<br><em>Into the visual.</em></h2></div>
-      <p>Posters, thumbnails, editorial layouts and bold visual concepts. A dedicated space for the graphic side of my creative work.</p>
+      <p>Posters, thumbnails, editorial layouts and bold visual concepts. Explore the graphic design side of my creative work.</p>
     </div>
   </div>
   <div class="design-rail" aria-label="Horizontally scrolling graphic design portfolio">
-    <article class="design-card" data-tilt><div class="art art-rental"><span class="price">$30,000</span><span class="sub">RENTAL CAR CLIENT</span><div class="car"></div></div><span class="card-index">GD / 001</span><div class="card-label"><small>CAMPAIGN GRAPHIC</small><h3>Make the offer<br>impossible to miss.</h3><p>High-contrast type · Automotive · Social campaign</p></div></article>
-    <article class="design-card" data-tilt><div class="art art-rome"><span class="rome-title">ROME</span><div class="colosseum"></div></div><span class="card-index">GD / 002</span><div class="card-label"><small>TRAVEL EDITORIAL</small><h3>A city with a story.</h3><p>Editorial hierarchy · Destination poster · Print-inspired</p></div></article>
-    <article class="design-card" data-tilt><div class="art art-book"><div class="book-shelf"></div><div class="book-stack"><i>$100M OFFERS</i><i>THE ALMANACK</i><i>AI SUPERPOWERS</i><i>THE COLD START</i><i>$100M LEADS</i></div></div><span class="card-index">GD / 003</span><div class="card-label"><small>CONTENT DESIGN</small><h3>Ideas worth<br>keeping.</h3><p>Creator content · Typography · Visual storytelling</p></div></article>
-    <article class="design-card" data-tilt><div class="art art-startup"><div class="block"></div><div class="headline">Building<br>@shopthelnk</div><div class="portrait-a"></div><div class="portrait-b"></div></div><span class="card-index">GD / 004</span><div class="card-label"><small>PODCAST / STARTUP</small><h3>People behind<br>the pivot.</h3><p>Interview promo · Cutout composition · Warm palette</p></div></article>
-    <article class="design-card" data-tilt><div class="art art-paris"><div class="paper"></div><div class="eiffel"></div><div class="croissant"></div></div><span class="card-index">GD / 005</span><div class="card-label"><small>FOOD & TRAVEL</small><h3>Designed to<br>make you look.</h3><p>Collage · Texture · Playful composition</p></div></article>
-    <article class="design-card" data-tilt><div class="art art-editorial"><div class="face"></div><div class="glasses"></div><div class="drip"></div></div><span class="card-index">GD / 006</span><div class="card-label"><small>EXPERIMENTAL ART</small><h3>Break the<br>usual frame.</h3><p>Photo manipulation · Color blocking · Art direction</p></div></article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/01-rental-car-client.webp" alt="$30,000 rental car client" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 001</span>
+      <div class="card-label"><small>AUTOMOTIVE CAMPAIGN</small><h3>$30,000 rental car client</h3><p>High-contrast campaign typography and automotive creative.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/02-rome-editorial-poster.png" alt="Rome, the Eternal City" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 002</span>
+      <div class="card-label"><small>TRAVEL EDITORIAL</small><h3>Rome, the Eternal City</h3><p>Bold destination poster with an editorial layout.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/03-business-books-promo.webp" alt="12 business books for the AI era" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 003</span>
+      <div class="card-label"><small>CREATOR CONTENT</small><h3>12 business books for the AI era</h3><p>Book stack composition and punchy headline hierarchy.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/04-startup-podcast-promo.webp" alt="Building @shopthelnk" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 004</span>
+      <div class="card-label"><small>STARTUP / PODCAST</small><h3>Building @shopthelnk</h3><p>Startup story promo with founder-led visuals.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-square">
+        <img src="./graphics%20design/05-paris-food-travel-collage.png" alt="Paris, in layers" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 005</span>
+      <div class="card-label"><small>FOOD & TRAVEL</small><h3>Paris, in layers</h3><p>Playful food collage with travel-inspired art direction.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/06-video-editing-courses-promo.webp" alt="Video editing courses" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 006</span>
+      <div class="card-label"><small>CREATOR THUMBNAIL</small><h3>Video editing courses</h3><p>Bold thumbnail typography and visual emphasis.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/07-editorial-yellow-glasses.webp" alt="Break the usual frame" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 007</span>
+      <div class="card-label"><small>EXPERIMENTAL ART</small><h3>Break the usual frame</h3><p>Editorial portrait, grayscale treatment and yellow accent.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/08-mismanaged-millions-thumbnail.png" alt="Mismanaged millions" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 008</span>
+      <div class="card-label"><small>BUSINESS THUMBNAIL</small><h3>Mismanaged millions</h3><p>Contrast-driven business storytelling thumbnail.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/09-neon-portrait-collage.webp" alt="Shift your perspective" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 009</span>
+      <div class="card-label"><small>EXPERIMENTAL COLLAGE</small><h3>Shift your perspective</h3><p>Graphic shapes, portrait cutout and neon color blocking.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/10-cat-campaign-graphic.png" alt="Burrp…" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 010</span>
+      <div class="card-label"><small>CAMPAIGN GRAPHIC</small><h3>Burrp…</h3><p>Bright product-style campaign with a playful subject.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/11-creative-unlock-promo.png" alt="The creative unlock" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 011</span>
+      <div class="card-label"><small>CREATOR THUMBNAIL</small><h3>The creative unlock</h3><p>Portrait-led layout with oversized title typography.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/12-statue-of-liberty-editorial.png" alt="A symbol of freedom" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 012</span>
+      <div class="card-label"><small>TRAVEL EDITORIAL</small><h3>A symbol of freedom</h3><p>Editorial city composition with layered imagery.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/13-mount-fuji-travel-poster.webp" alt="Mount Fuji" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 013</span>
+      <div class="card-label"><small>TRAVEL POSTER</small><h3>Mount Fuji</h3><p>Scenic destination poster with dramatic typography.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-square">
+        <img src="./graphics%20design/14-badminton-tryouts-poster.png" alt="Tryouts · 30 August" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 014</span>
+      <div class="card-label"><small>EVENT POSTER</small><h3>Tryouts · 30 August</h3><p>Sporting event graphic with high-contrast purple design.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/15-low-hemoglobin-infographic.webp" alt="Low hemoglobin?" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 015</span>
+      <div class="card-label"><small>INFOGRAPHIC</small><h3>Low hemoglobin?</h3><p>Informational layout balancing text, illustration and product imagery.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/16-shifts-poster.png" alt="Shifts" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 016</span>
+      <div class="card-label"><small>POSTER DESIGN</small><h3>Shifts</h3><p>High-energy portrait poster with oversized type and vivid color.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-portrait">
+        <img src="./graphics%20design/17-giraffe-poster.webp" alt="Let me tell you something!" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 017</span>
+      <div class="card-label"><small>CAMPAIGN POSTER</small><h3>Let me tell you something!</h3><p>Wildlife imagery with expressive headline design.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/18-eye-rubik-video-graphic.jpg" alt="A different point of view" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 018</span>
+      <div class="card-label"><small>VIDEO / CONCEPT GRAPHIC</small><h3>A different point of view</h3><p>Conceptual composition linking camera, eye and visual puzzle.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-square">
+        <img src="./graphics%20design/19-protein-product-ad.png" alt="Protein · French vanilla" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 019</span>
+      <div class="card-label"><small>PRODUCT ADVERTISING</small><h3>Protein · French vanilla</h3><p>Premium product styling with ingredient-led art direction.</p></div>
+    </article>
+    <article class="design-card" data-tilt>
+      <div class="art art-landscape">
+        <img src="./graphics%20design/20-we-can-do-it-poster.png" alt="We can do it all!" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <span class="card-index">GD / 020</span>
+      <div class="card-label"><small>CAMPAIGN POSTER</small><h3>We can do it all!</h3><p>Retro-inspired poster with bold messaging and strong contrast.</p></div>
+    </article>
   </div>
-  <div class="design-cta"><span>Drag to explore · 06 visual directions</span><a href="#contact">Have a design in mind? ↗</a></div>
+  <div class="design-cta"><span>Drag to explore · 20 original designs</span><a href="#contact">Have a design in mind? ↗</a></div>
 </section>
 
 <section class="skills container">
