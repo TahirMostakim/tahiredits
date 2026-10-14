@@ -2007,12 +2007,6 @@ if(reelWindow && reelTrack){
   let updateQueued = false;
   let userManualCard = null;
 
-  const playbackLimit = function(){
-    if(window.innerWidth <= 680) return 1;
-    if(window.innerWidth <= 1080) return 2;
-    return 3;
-  };
-
   const videoOf = card => card.querySelector('.preview-video');
   const controlOf = card => card.querySelector('.preview-toggle');
 
@@ -2088,7 +2082,6 @@ if(reelWindow && reelTrack){
         return {card:card,distance:Math.abs((rect.left+rect.right)/2-viewportCenter)};
       })
       .sort((a,b)=>a.distance-b.distance)
-      .slice(0,playbackLimit())
       .map(item=>item.card);
 
     selectedCards.clear();
@@ -2174,10 +2167,8 @@ if(reelWindow && reelTrack){
     }
   });
 
-  if(reduceMotion){
-    // Respect reduced-motion autoplay preferences while leaving explicit playback available.
-    return;
-  }
+  // Autoplay is enabled even when the visitor prefers reduced motion; previews are muted and looped.
+  // Keep lazy preparation and viewport-based playback to avoid decoding every MP4 at once.
 
   // Prebuffer several cards ahead; MP4s are small and their poster stays visible meanwhile.
   const preloader = new IntersectionObserver(function(entries){
@@ -2208,10 +2199,10 @@ if(reelWindow && reelTrack){
     playbackObserver.observe(card);
   });
 
-  // Re-rank nearby cards a few times per second to share decoder time safely.
+  // Keep all visible previews playing; no small-screen or desktop playback cap.
   window.setInterval(function(){
     if(!document.hidden) scheduleUpdate();
-  },350);
+  },700);
 
   document.addEventListener('visibilitychange',function(){
     if(document.hidden) cards.forEach(card=>stop(card,false));
