@@ -804,6 +804,11 @@ img,video,svg{max-width:100%}
 .design-section .card-label p{color:#aeb3c7}
 @media(max-width:700px){.design-section .design-card{flex-basis:78vw}.design-section .card-label{min-height:130px}}
 
+
+.design-section .design-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:22px;background:radial-gradient(circle at 30% 24%,rgba(105,130,255,.35),transparent 36%),radial-gradient(circle at 78% 82%,rgba(177,36,101,.3),transparent 37%),linear-gradient(145deg,#191b36,#090a17);color:#eef0ff;font:800 clamp(19px,2.5vw,30px)/1.05 "Space Grotesk";letter-spacing:-1px;overflow-wrap:anywhere}
+.design-section .design-card:nth-child(3n) .design-fallback{background:radial-gradient(circle at 65% 20%,rgba(255,184,86,.35),transparent 32%),linear-gradient(145deg,#211611,#090a17);color:#ffe6bb}
+.design-section .design-card:nth-child(3n + 1) .design-fallback{background:radial-gradient(circle at 20% 80%,rgba(55,215,206,.3),transparent 35%),linear-gradient(145deg,#101d38,#090a17)}
+
 </style>
 
 <style id="section-neon-upgrade">
@@ -1166,6 +1171,7 @@ body:after{display:none}
   <div class="design-rail" aria-label="Horizontally scrolling graphic design portfolio">
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">$30,000 / AUTOMOTIVE</div>
         <img src="./graphics%20design/01-rental-car-client.webp" alt="$30,000 rental car client" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 001</span>
@@ -1173,6 +1179,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">ROME / TRAVEL EDITORIAL</div>
         <img src="./graphics%20design/02-rome-editorial-poster.png" alt="Rome, the Eternal City" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 002</span>
@@ -1180,6 +1187,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">12 BUSINESS BOOKS</div>
         <img src="./graphics%20design/03-business-books-promo.webp" alt="12 business books for the AI era" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 003</span>
@@ -1187,6 +1195,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">BUILDING @SHOPTHELNK</div>
         <img src="./graphics%20design/04-startup-podcast-promo.webp" alt="Building @shopthelnk" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 004</span>
@@ -1194,6 +1203,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-square">
+        <div class="design-fallback" aria-hidden="true">PARIS / FOOD & TRAVEL</div>
         <img src="./graphics%20design/05-paris-food-travel-collage.png" alt="Paris, in layers" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 005</span>
@@ -1201,6 +1211,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">VIDEO EDITING COURSES</div>
         <img src="./graphics%20design/06-video-editing-courses-promo.webp" alt="Video editing courses" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 006</span>
@@ -1208,6 +1219,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">EDITORIAL EXPERIMENT</div>
         <img src="./graphics%20design/07-editorial-yellow-glasses.webp" alt="Break the usual frame" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 007</span>
@@ -1215,6 +1227,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">MISMANAGED MILLIONS</div>
         <img src="./graphics%20design/08-mismanaged-millions-thumbnail.png" alt="Mismanaged millions" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 008</span>
@@ -1222,6 +1235,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">SHIFTS / CREATIVE</div>
         <img src="./graphics%20design/09-neon-portrait-collage.webp" alt="Shift your perspective" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 009</span>
@@ -1229,6 +1243,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">BURRP / CAMPAIGN</div>
         <img src="./graphics%20design/10-cat-campaign-graphic.png" alt="Burrp…" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 010</span>
@@ -1236,6 +1251,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">THE CREATIVE UNLOCK</div>
         <img src="./graphics%20design/11-creative-unlock-promo.png" alt="The creative unlock" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 011</span>
@@ -1243,6 +1259,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">A SYMBOL OF FREEDOM</div>
         <img src="./graphics%20design/12-statue-of-liberty-editorial.png" alt="A symbol of freedom" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 012</span>
@@ -1250,6 +1267,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">MOUNT FUJI</div>
         <img src="./graphics%20design/13-mount-fuji-travel-poster.webp" alt="Mount Fuji" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 013</span>
@@ -1257,6 +1275,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-square">
+        <div class="design-fallback" aria-hidden="true">TRYOUTS / 30 AUGUST</div>
         <img src="./graphics%20design/14-badminton-tryouts-poster.png" alt="Tryouts · 30 August" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 014</span>
@@ -1264,6 +1283,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">LOW HEMOGLOBIN?</div>
         <img src="./graphics%20design/15-low-hemoglobin-infographic.webp" alt="Low hemoglobin?" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 015</span>
@@ -1271,6 +1291,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">SHIFTS</div>
         <img src="./graphics%20design/16-shifts-poster.png" alt="Shifts" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 016</span>
@@ -1278,6 +1299,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-portrait">
+        <div class="design-fallback" aria-hidden="true">LET ME TELL YOU</div>
         <img src="./graphics%20design/17-giraffe-poster.webp" alt="Let me tell you something!" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 017</span>
@@ -1285,6 +1307,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">A DIFFERENT POINT OF VIEW</div>
         <img src="./graphics%20design/18-eye-rubik-video-graphic.jpg" alt="A different point of view" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 018</span>
@@ -1292,6 +1315,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-square">
+        <div class="design-fallback" aria-hidden="true">PROTEIN / FRENCH VANILLA</div>
         <img src="./graphics%20design/19-protein-product-ad.png" alt="Protein · French vanilla" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 019</span>
@@ -1299,6 +1323,7 @@ body:after{display:none}
     </article>
     <article class="design-card" data-tilt>
       <div class="art art-landscape">
+        <div class="design-fallback" aria-hidden="true">WE CAN DO IT ALL</div>
         <img src="./graphics%20design/20-we-can-do-it-poster.png" alt="We can do it all!" loading="lazy" onerror="this.style.display='none'">
       </div>
       <span class="card-index">GD / 020</span>
