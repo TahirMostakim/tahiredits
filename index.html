@@ -836,6 +836,12 @@ img,video,svg{max-width:100%}
 .design-rail .design-card .card-index{transform:translateZ(22px)}
 @media(prefers-reduced-motion:reduce){.design-rail{scroll-behavior:auto}.reel-card,.design-card{transition:none}}
 
+
+/* Auto-scroll uses a measured loop; enable native scrolling whenever a visitor interacts. */
+.design-rail.is-auto-scrolling{scroll-snap-type:none!important;scroll-behavior:auto!important}
+.design-rail.is-user-scrolling{scroll-snap-type:x proximity;scroll-behavior:auto!important}
+.design-rail.is-dragging{scroll-snap-type:none!important;cursor:grabbing}
+
 </style>
 
 <style id="section-neon-upgrade">
@@ -1628,15 +1634,14 @@ if(reelWindow && reelTrack){
  window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(update)},{passive:true});
 })();
 
-/* Endless horizontal graphic-design showcase, with touch and mouse interaction. */
+/* Endless horizontal graphic-design rail with manual touch/swipe and mouse drag support. */
 (()=>{
   const rail=document.querySelector('.design-rail');
   if(!rail)return;
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-  const originals=[...rail.querySelectorAll('.design-card')];
-  if(originals.length<2||reducedMotion.matches)return;
+  const originals=[...rail.querySelectorAll(':scope > .design-card')];
+  if(originals.length<2)return;
 
-  // Duplicate one cycle so the auto-scroll can loop without a visible jump.
+  // Only add one duplicate set. It creates enough runway for a visually continuous loop.
   const clones=originals.map(card=>{
     const clone=card.cloneNode(true);
     clone.dataset.railClone='true';
@@ -1646,82 +1651,106 @@ if(reelWindow && reelTrack){
     return clone;
   });
 
-  // Bind the same subtle desktop 3D tilt to the duplicate cards.
-  clones.forEach(card=>{
+  const bindTilt=card=>{
     card.addEventListener('pointermove',e=>{
-      if(e.pointerType==='touch'||rail.classList.contains('is-dragging'))return;
+      if(e.pointerType==='touch'||rail.classList.contains('is-user-scrolling'))return;
       const r=card.getBoundingClientRect();
       const x=(e.clientX-r.left)/Math.max(r.width,1)-.5;
       const y=(e.clientY-r.top)/Math.max(r.height,1)-.5;
       card.style.transform='perspective(900px) rotateY('+(x*8)+'deg) rotateX('+(-y*8)+'deg) translateY(-7px)';
     });
     card.addEventListener('pointerleave',()=>{card.style.transform=''});
-  });
+  };
+  originals.forEach(bindTilt);
+  clones.forEach(bindTilt);
 
-  let cycleWidth=0, raf=0, last=0, paused=false, resumeTimer=0;
-  let mouseDrag=false, dragStartX=0, dragScroll=0;
+  let cycleWidth=0,lastFrame=0,paused=false,resumeTimer=0,mouseDrag=false,dragStartX=0,dragStartScroll=0;
+  const speed=22; // pixels per second: smooth, readable movement rather than a fast ticker
+
   const measure=()=>{
-    if(clones[0]&&originals[0]){
-      cycleWidth=clones[0].offsetLeft-originals[0].offsetLeft;
-    }
+    if(!clones[0]||!originals[0])return;
+    cycleWidth=clones[0].getBoundingClientRect().left-originals[0].getBoundingClientRect().left;
   };
-  const wrapScroll=()=>{
+  const wrap=()=>{
     if(cycleWidth<=0)return;
-    while(rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
-    while(rail.scrollLeft<0)rail.scrollLeft+=cycleWidth;
+    if(rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
+    else if(rail.scrollLeft<0)rail.scrollLeft+=cycleWidth;
   };
-  const stopAuto=()=>{paused=true;last=0;};
-  const resumeSoon=()=>{
+  const pause=()=>{
+    paused=true;
+    lastFrame=0;
+    rail.classList.remove('is-auto-scrolling');
+    rail.classList.add('is-user-scrolling');
+  };
+  const resumeAfterInteraction=()=>{
     clearTimeout(resumeTimer);
-    resumeTimer=setTimeout(()=>{paused=false;last=0;},1300);
+    resumeTimer=setTimeout(()=>{
+      paused=false;
+      lastFrame=0;
+      rail.classList.remove('is-user-scrolling');
+      rail.classList.add('is-auto-scrolling');
+    },900);
   };
-  const tick=now=>{
-    if(!rail.isConnected)return;
-    if(!last)last=now;
-    const dt=Math.min(40,now-last);
-    last=now;
-    if(!paused&&document.visibilityState==='visible'){
-      rail.scrollLeft+=dt*0.022;
-      if(cycleWidth>0&&rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
-    }
-    raf=requestAnimationFrame(tick);
-  };
-  rail.addEventListener('mouseenter',stopAuto);
-  rail.addEventListener('mouseleave',resumeSoon);
-  rail.addEventListener('focusin',stopAuto);
-  rail.addEventListener('focusout',resumeSoon);
+
+  rail.classList.add('is-auto-scrolling');
+  // Disable snap only during auto movement: native horizontal touch gestures remain enabled.
   rail.addEventListener('pointerdown',e=>{
-    stopAuto();
-    if(e.pointerType!=='mouse'||e.button!==0)return; // Native touch gestures stay enabled.
+    pause();
+    if(e.pointerType!=='mouse'||e.button!==0){
+      resumeAfterInteraction();
+      return;
+    }
     mouseDrag=true;
     dragStartX=e.clientX;
-    dragScroll=rail.scrollLeft;
+    dragStartScroll=rail.scrollLeft;
     rail.classList.add('is-dragging');
     try{rail.setPointerCapture(e.pointerId)}catch(_){}
   });
   rail.addEventListener('pointermove',e=>{
     if(!mouseDrag)return;
-    rail.scrollLeft=dragScroll-(e.clientX-dragStartX);
-    wrapScroll();
+    const target=dragStartScroll-(e.clientX-dragStartX);
+    if(cycleWidth>0){
+      if(target<0)rail.scrollLeft=cycleWidth+target;
+      else if(target>=cycleWidth)rail.scrollLeft=target-cycleWidth;
+      else rail.scrollLeft=target;
+    }else rail.scrollLeft=Math.max(0,target);
   });
-  const finish=()=>{
-    if(mouseDrag){mouseDrag=false;rail.classList.remove('is-dragging');}
-    resumeSoon();
+  const finishDrag=()=>{
+    if(mouseDrag){
+      mouseDrag=false;
+      rail.classList.remove('is-dragging');
+    }
+    resumeAfterInteraction();
   };
-  rail.addEventListener('pointerup',finish);
-  rail.addEventListener('pointercancel',finish);
-  rail.addEventListener('lostpointercapture',finish);
-  rail.addEventListener('touchstart',stopAuto,{passive:true});
-  rail.addEventListener('touchend',resumeSoon,{passive:true});
-  rail.addEventListener('touchcancel',resumeSoon,{passive:true});
+  rail.addEventListener('pointerup',finishDrag);
+  rail.addEventListener('pointercancel',finishDrag);
+  rail.addEventListener('lostpointercapture',finishDrag);
+  rail.addEventListener('touchstart',pause,{passive:true});
+  rail.addEventListener('touchend',resumeAfterInteraction,{passive:true});
+  rail.addEventListener('touchcancel',resumeAfterInteraction,{passive:true});
   rail.addEventListener('wheel',e=>{
-    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){stopAuto();resumeSoon();}
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){
+      pause();
+      resumeAfterInteraction();
+    }
   },{passive:true});
-  window.addEventListener('resize',()=>{measure();wrapScroll();},{passive:true});
-  document.addEventListener('visibilitychange',()=>{last=0;});
+  // Don't stop just because the cursor is hovering over the gallery.
+  window.addEventListener('resize',()=>{measure();wrap();},{passive:true});
+  document.addEventListener('visibilitychange',()=>{lastFrame=0;});
   measure();
-  requestAnimationFrame(()=>{measure();});
-  raf=requestAnimationFrame(tick);
+  requestAnimationFrame(measure);
+  const tick=now=>{
+    if(!rail.isConnected)return;
+    if(!lastFrame)lastFrame=now;
+    const delta=Math.min(50,now-lastFrame);
+    lastFrame=now;
+    if(!paused&&document.visibilityState==='visible'&&cycleWidth>0){
+      rail.scrollLeft+=delta*speed/1000;
+      if(rail.scrollLeft>=cycleWidth)rail.scrollLeft-=cycleWidth;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 })();
 
 </script>
