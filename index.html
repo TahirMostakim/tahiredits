@@ -1677,6 +1677,7 @@ if(reelWindow && reelTrack){
     else if(rail.scrollLeft<0)rail.scrollLeft+=cycleWidth;
   };
   const pause=()=>{
+    clearTimeout(resumeTimer);
     paused=true;
     lastFrame=0;
     rail.classList.remove('is-auto-scrolling');
